@@ -1,0 +1,3883 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GroupTrip</title>
+<style>
+  :root{
+    --green:#00EB5B; --mint:#34E0A1; --green-ink:#04703C; --green-soft:#E6FBF0;
+    --salmon:#FF4E51; --salmon-soft:#FF6666; --salmon-ink:#C42B2E; --salmon-wash:#FFEDED;
+    --amber:#E9A23B; --amber-wash:#FDF3E3;
+    --ink:#0B1117; --ink-2:#5A6472; --ink-3:#96A0AC;
+    --canvas:#F3F5F6; --surface:#fff; --line:#E7EBEE; --line-2:#D8DEE3;
+    --r:14px; --r-sm:10px;
+    --sh-1:0 1px 2px rgba(11,17,23,.06), 0 1px 1px rgba(11,17,23,.04);
+    --sh-2:0 6px 24px -8px rgba(11,17,23,.18), 0 2px 6px rgba(11,17,23,.05);
+    --sh-3:0 24px 60px -20px rgba(11,17,23,.30), 0 4px 12px rgba(11,17,23,.08);
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--canvas);color:var(--ink);font:14px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+  .n{font-variant-numeric:tabular-nums}
+  button,select,input{font:inherit;color:inherit}
+  :focus-visible{outline:2px dashed var(--green-ink);outline-offset:2px;border-radius:6px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  /* ── app header ─────────────────────────────── */
+  .app{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .app-in{display:flex;align-items:center;gap:18px;padding:0 20px;height:60px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em}
+  .mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(140deg,var(--green),var(--mint));box-shadow:0 2px 8px rgba(0,235,91,.45);display:grid;place-items:center;color:#04331C;font-size:15px;font-weight:800}
+  nav.tabs{display:flex;gap:2px;margin-left:6px}
+  nav.tabs button{border:0;background:none;padding:8px 12px;border-radius:999px;color:var(--ink-2);font-weight:600;font-size:13px;cursor:pointer;position:relative}
+  nav.tabs button:hover{background:var(--canvas);color:var(--ink)}
+  nav.tabs button[aria-current="page"]{color:var(--ink);background:var(--green-soft)}
+  nav.tabs button[aria-current="page"]::after{content:"";position:absolute;left:12px;right:12px;bottom:2px;height:2px;border-radius:2px;background:var(--green)}
+  .push{margin-left:auto}
+  .who{display:flex;align-items:center}
+  .who .av{margin-left:-8px;box-shadow:0 0 0 2px #fff}
+  .who .av:first-child{margin-left:0}
+  .av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:800;color:#fff;background:var(--ink-2);flex:none}
+  .av.lg{width:36px;height:36px;font-size:12px}
+  .av.a{background:linear-gradient(140deg,#3B82F6,#2563EB)}
+  .av.b{background:linear-gradient(140deg,#8B5CF6,#7C3AED)}
+  .av.c{background:linear-gradient(140deg,#F59E0B,#D97706)}
+  .av.d{background:linear-gradient(140deg,#EC4899,#DB2777)}
+  .ctl{display:flex;align-items:center;gap:8px}
+  .seg{display:inline-flex;background:var(--canvas);border:1px solid var(--line-2);border-radius:999px;padding:3px;gap:2px}
+  .seg button{border:0;background:none;padding:5px 13px;border-radius:999px;font-size:12.5px;font-weight:650;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+  .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--sh-1)}
+  .seg.salmon button[aria-pressed="true"]{background:var(--salmon);color:#fff}
+  select{border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;cursor:pointer;max-width:220px}
+  .btn{border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:7px 14px;font-weight:650;font-size:13px;cursor:pointer;box-shadow:var(--sh-1);white-space:nowrap}
+  .btn:hover{border-color:var(--ink-3)}
+  .btn.go{background:var(--green);border-color:var(--green);color:#04331C}
+  .btn.go:hover{filter:brightness(1.04)}
+  .btn.stop{background:var(--salmon-wash);border-color:#FBD5D5;color:var(--salmon-ink)}
+  .btn.sm{padding:5px 11px;font-size:12px}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+  /* ── page ──────────────────────────────────── */
+  main{padding:20px;max-width:1360px;margin:0 auto}
+  .toolbar{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .h1{font-size:19px;font-weight:750;letter-spacing:-.02em;margin:0}
+  .sub{color:var(--ink-2);font-size:12.5px;font-weight:550}
+  .legend{display:flex;gap:14px;margin-left:auto;font-size:11.5px;color:var(--ink-2);font-weight:600}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-1);overflow:hidden}
+
+  /* ── board ─────────────────────────────────── */
+  .scroller{overflow-x:auto}
+  table{border-collapse:separate;border-spacing:0;width:100%;min-width:760px}
+  thead th{position:sticky;top:0;z-index:2;background:var(--surface);text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:750;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.m{text-align:center;width:64px}
+  thead th.m .av{margin:0 auto}
+  tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:middle;background:var(--surface)}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr.pick{cursor:pointer}
+  tbody tr.pick:hover td{background:#FAFCFC}
+  tbody tr.out td{opacity:.55}
+  tbody tr.out .nm{text-decoration:line-through;text-decoration-color:var(--salmon)}
+  .nm{font-weight:700;letter-spacing:-.01em}
+  .meta{display:flex;gap:6px;color:var(--ink-2);font-size:11.5px;font-weight:600;margin-top:2px}
+  .thumb{width:38px;height:38px;border-radius:11px;object-fit:cover;background:var(--line);border:1px solid var(--line-2);flex:none}
+  .dwrap{display:flex;align-items:center;gap:11px;min-width:200px}
+  .rank{width:18px;font-size:11px;font-weight:800;color:var(--ink-3);flex:none}
+  .fit{display:flex;flex-direction:column;align-items:center;gap:4px}
+  .fit .v{font-size:13px;font-weight:750}
+  .bar{width:34px;height:5px;border-radius:99px;background:var(--line);overflow:hidden}
+  .bar > i{display:block;height:100%;border-radius:99px}
+  .g{font-size:19px;font-weight:800;letter-spacing:-.03em}
+  .chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 9px;font-size:11px;font-weight:700;white-space:nowrap}
+  .chip.good{background:var(--green-soft);color:var(--green-ink)}
+  .chip.bad{background:var(--salmon-wash);color:var(--salmon-ink)}
+  .chip.mid{background:var(--amber-wash);color:#8A5A0B}
+  .chip.ghost{background:var(--canvas);color:var(--ink-2)}
+  .dots{display:flex}
+  .dots .av{margin-left:-6px;box-shadow:0 0 0 1.5px #fff;width:22px;height:22px;font-size:9px}
+  .dots .av:first-child{margin-left:0}
+  /* signature mark: where the group disagrees */
+  .spread{width:104px;height:20px;position:relative}
+  .spread .tr{position:absolute;left:0;right:0;top:8px;height:4px;border-radius:99px;background:var(--line)}
+  .spread .rg{position:absolute;top:8px;height:4px;border-radius:99px;background:var(--mint)}
+  .spread.wide .rg{background:linear-gradient(90deg,var(--salmon),var(--salmon-soft))}
+  .spread .pt{position:absolute;top:4px;width:5px;height:12px;border-radius:99px;background:var(--ink);box-shadow:0 0 0 1.5px #fff}
+
+  /* ── drawer ────────────────────────────────── */
+  .veil{position:fixed;inset:0;background:rgba(11,17,23,.36);opacity:0;pointer-events:none;transition:opacity .18s ease-out;z-index:50}
+  .veil.on{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);box-shadow:var(--sh-3);transform:translateX(102%);transition:transform .22s cubic-bezier(.22,1,.36,1);z-index:60;display:flex;flex-direction:column}
+  .drawer.on{transform:none}
+  .dhead{padding:16px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center}
+  .dhead .thumb{width:52px;height:52px;border-radius:14px}
+  .dbody{padding:16px;overflow:auto;flex:1}
+  .dfoot{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px}
+  h3.sec{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:750;margin:18px 0 8px}
+  h3.sec:first-child{margin-top:0}
+  .fitrow{display:grid;grid-template-columns:26px 1fr 34px;align-items:center;gap:9px;padding:5px 0}
+  .fitrow .t{height:7px;border-radius:99px;background:var(--line);overflow:hidden}
+  .fitrow .t > i{display:block;height:100%;border-radius:99px}
+  .fitrow .s{text-align:right;font-weight:750;font-size:12.5px}
+  .chipset{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{display:inline-flex;align-items:center;gap:6px;border:1px dashed var(--line-2);border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:650;color:var(--ink-2)}
+  .tag.fixed{border-style:solid;border-color:#FBD5D5;background:var(--salmon-wash);color:var(--salmon-ink)}
+  .note{background:var(--canvas);border-radius:var(--r-sm);padding:11px 12px;font-size:12.5px;color:var(--ink-2);line-height:1.5}
+  .ring{position:relative;width:64px;height:64px;flex:none}
+  .ring svg{transform:rotate(-90deg)}
+  .ring .lab{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:14px}
+  .appr{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .appr:last-child{border-bottom:0}
+  .sw{width:38px;height:22px;border-radius:99px;background:var(--line-2);border:0;position:relative;cursor:pointer;flex:none;margin-left:auto;transition:background .15s}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:var(--sh-1);transition:transform .15s}
+  .sw[aria-pressed="true"]{background:var(--green)}
+  .sw[aria-pressed="true"]::after{transform:translateX(16px)}
+
+  /* ── people / log ──────────────────────────── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .pcard{padding:16px}
+  .pcard .top{display:flex;gap:11px;align-items:center;margin-bottom:12px}
+  .meter{height:7px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0}
+  .meter > i{display:block;height:100%;border-radius:99px;background:var(--green)}
+  .meter.over > i{background:var(--salmon)}
+  .tl{position:relative;padding-left:26px}
+  .tl::before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--line)}
+  .tl .ev{position:relative;padding:9px 0;display:flex;gap:10px;align-items:center}
+  .tl .ev::before{content:"";position:absolute;left:-22px;width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 3px #fff}
+  .tl .ev.bg::before{background:var(--salmon)}
+  .tl .ev .t{margin-left:auto;color:var(--ink-3);font-size:11px;font-weight:650}
+  .empty{padding:56px 24px;text-align:center}
+  .empty .mark{width:44px;height:44px;border-radius:14px;margin:0 auto 12px;font-size:20px}
+  .sk{height:11px;border-radius:99px;background:linear-gradient(90deg,var(--line) 25%,#F7F9FA 50%,var(--line) 75%);background-size:200% 100%;animation:sh 1.1s linear infinite}
+  @keyframes sh{to{background-position:-200% 0}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  @media (max-width:820px){
+    .app-in{height:auto;flex-wrap:wrap;padding:10px 14px;gap:10px}
+    nav.tabs{order:3;width:100%;overflow-x:auto}
+    main{padding:14px}
+    .legend{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="app-in">
+    <span class="logo"><span class="mark" aria-hidden="true">⌘</span>GroupTrip</span>
+    <nav class="tabs" id="tabs" aria-label="Sections">
+      <button type="button" data-tab="compare">Compare</button>
+      <button type="button" data-tab="people">People</button>
+      <button type="button" data-tab="log">Record</button>
+    </nav>
+    <div class="push ctl">
+      <div class="seg" id="view" role="group" aria-label="Interface version">
+        <button type="button" data-view="plain" aria-pressed="false">Plain</button>
+        <button type="button" data-view="conflict" aria-pressed="true">Conflict-aware</button>
+      </div>
+      <select id="strategy" aria-label="Ranking"></select>
+      <select id="actor" aria-label="Acting as"></select>
+      <div class="who" id="who"></div>
+    </div>
+  </div>
+</header>
+
+<main id="main"></main>
+<div class="veil" id="veil"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Destination detail"></aside>
+
+<script>
+const DATA = {
+ "origin": "Toronto",
+ "trip_days": 3,
+ "members": [
+  {
+   "id": 1,
+   "name": "Priya",
+   "initials": "PR",
+   "budget_max": 900,
+   "climates": [
+    "tropical",
+    "warm"
+   ],
+   "activities": [
+    "beach",
+    "food"
+   ],
+   "travel_time_max_hours": 8,
+   "likes": [
+    "beach"
+   ],
+   "dislikes": [
+    "nightlife"
+   ],
+   "conditions": [
+    {
+     "id": "c1-0",
+     "text": "No more than $900 pp",
+     "type": "budget",
+     "status": "fixed"
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "name": "Marcus",
+   "initials": "MC",
+   "budget_max": 2200,
+   "climates": [
+    "temperate",
+    "continental",
+    "mild"
+   ],
+   "activities": [
+    "culture",
+    "history",
+    "nature"
+   ],
+   "travel_time_max_hours": 20,
+   "likes": [
+    "culture"
+   ],
+   "dislikes": [
+    "beach"
+   ],
+   "conditions": [
+    {
+     "id": "c2-0",
+     "text": "Two full days of sightseeing",
+     "type": "activity",
+     "status": "flexible"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Dani",
+   "initials": "DN",
+   "budget_max": 1600,
+   "climates": [
+    "warm",
+    "mild",
+    "tropical"
+   ],
+   "activities": [
+    "nature",
+    "food",
+    "wellness"
+   ],
+   "travel_time_max_hours": 14,
+   "likes": [
+    "nature"
+   ],
+   "dislikes": [
+    "nightlife"
+   ],
+   "conditions": [
+    {
+     "id": "c3-0",
+     "text": "Nothing over 14h flying",
+     "type": "travel_time",
+     "status": "fixed"
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Sam",
+   "initials": "SM",
+   "budget_max": 3000,
+   "climates": [],
+   "activities": [
+    "nightlife",
+    "food",
+    "shopping"
+   ],
+   "travel_time_max_hours": 24,
+   "likes": [
+    "nightlife"
+   ],
+   "dislikes": [
+    "hiking"
+   ],
+   "conditions": [
+    {
+     "id": "c4-0",
+     "text": "A real nightlife",
+     "type": "other",
+     "status": "flexible"
+    }
+   ]
+  }
+ ],
+ "veto": {
+  "member_id": 3,
+  "destination": "Cancun"
+ },
+ "strategies": {
+  "average": {
+   "label": "favoring the highest average score",
+   "recommendations": [
+    {
+     "destination": {
+      "id": 43,
+      "name": "Mexico City",
+      "country": "Mexico",
+      "region": "Mexico City",
+      "climate": "mild",
+      "dest_type": "city",
+      "est_cost": 627.0,
+      "travel_time_hours": 5.1,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Mexico City (Spanish: México, Ciudad de México or CDMX) is the capital of the Mexican Republic, the most populous city in the country, and one of the most important financial and cultural centers of the American continent. The city center is built on the ruins of the Aztec capital Tenochtitlan, and ",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg/1280px-Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg"
+     },
+     "group_score": 82.9,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 64.3,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Mexico City scores 83/100 for the group, favoring the highest average score. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 1,
+      "name": "Lisbon",
+      "country": "Portugal",
+      "region": "Lisbon District",
+      "climate": "mild",
+      "dest_type": "coastal city",
+      "est_cost": 564.0,
+      "travel_time_hours": 8.2,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Lisbon (Portuguese: Lisboa) is the capital of Portugal situated on seven hills at the wide mouth of the river Tagus (Tejo) where it meets the Atlantic Ocean. With 545,000 residents in the city and 3.0 million in the Lisbon Region (2024) and a thriving mix of Portugal's rich history and vivid contemp",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg/1280px-Lisboa_-_Portugal_%2852597836992%29.jpg"
+     },
+     "group_score": 82.8,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.9,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Lisbon scores 83/100 for the group, favoring the highest average score. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 27,
+      "name": "Tokyo",
+      "country": "Japan",
+      "region": "Tokyo",
+      "climate": "temperate",
+      "dest_type": "city",
+      "est_cost": 537.0,
+      "travel_time_hours": 13.9,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "thumb|240px|The bulk of the Tokyo Metropolitan Government Building, [[Tokyo/Shinjuku|Shinjuku]] :Tokyo can be broadly divided into the \"23 special wards\", \"Tama region\" and \"Islands\". This article is about the 23 special wards of Tokyo, which corresponds to what many think of as the \"city of Tokyo\".",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1280px-Skyscrapers_of_Shinjuku_2009_January.jpg"
+     },
+     "group_score": 82.2,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 58.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "travel time 13.9h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Tokyo scores 82/100 for the group, favoring the highest average score. Marcus is best served (96/100). Priya is least satisfied because climate 'temperate' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 22,
+      "name": "Marrakesh",
+      "country": "Morocco",
+      "region": "Marrakesh-Safi",
+      "climate": "arid",
+      "dest_type": "cultural",
+      "est_cost": 285.0,
+      "travel_time_hours": 8.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "Marrakech (Arabic: مراكش, Berber: ⴰⵎⵓⵔⴰⴽⵓⵛ), also spelt Marrakesh, is one of the imperial cities of Morocco. Marrakech is the main tourist destination in Morocco.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg/1280px-Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg"
+     },
+     "group_score": 80.8,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.0,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Marrakesh scores 81/100 for the group, favoring the highest average score. Sam is best served (96/100). Priya is least satisfied because climate 'arid' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 31,
+      "name": "Bali",
+      "country": "Indonesia",
+      "region": "Bali",
+      "climate": "tropical",
+      "dest_type": "island",
+      "est_cost": 234.0,
+      "travel_time_hours": 20.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "thumb|right|400px|Puri Saren Agung (Water Palace) in central Ubud Ubud, a town in central Bali of around 75,000 people (2020), is regarded as the cultural centre of Bali. It is famous as an arts and crafts hub, and much of the town and nearby villages seems to consist of artists' workshops and galle",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Odalan_preparation_inside_a_pura.jpg"
+     },
+     "group_score": 72.4,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 66.2,
+       "hard_violations": [],
+       "reasons": [
+        "travel time 20.8h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 42.5,
+       "hard_violations": [
+        "Nothing over 14h flying"
+       ],
+       "reasons": [
+        "violates a fixed condition: Nothing over 14h flying",
+        "travel time 20.8h exceeds limit 14.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        3
+       ],
+       "summary": "Dani has a fixed condition this destination breaks: Nothing over 14h flying",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Bali scores 72/100 for the group, favoring the highest average score. Sam is best served (96/100). Dani is least satisfied because violates a fixed condition: Nothing over 14h flying. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 41,
+      "name": "New York",
+      "country": "United States",
+      "region": "New York",
+      "climate": "continental",
+      "dest_type": "city",
+      "est_cost": 1089.0,
+      "travel_time_hours": 1.7,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Wall Street. Madison Avenue.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/1280px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg"
+     },
+     "group_score": 71.0,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 20.4,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.17
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "New York scores 71/100 for the group, favoring the highest average score. Marcus is best served (96/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 10,
+      "name": "Reykjavik",
+      "country": "Iceland",
+      "region": "Capital Region",
+      "climate": "cold",
+      "dest_type": "nature",
+      "est_cost": 921.0,
+      "travel_time_hours": 6.2,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife"
+      ],
+      "description": "Reykjavík is the capital of and largest city in Iceland and with an urban area population of around 233,000 (2019), it is the home to two-thirds of Iceland's population. It is the centre of culture and life of the Icelandic people, and is one of the focal points of tourism in Iceland.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg/1280px-Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg"
+     },
+     "group_score": 68.2,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 28.1,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 87.5,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.02
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Reykjavik scores 68/100 for the group, favoring the highest average score. Sam is best served (88/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 44,
+      "name": "Cancun",
+      "country": "Mexico",
+      "region": "Quintana Roo",
+      "climate": "tropical",
+      "dest_type": "coastal city",
+      "est_cost": 453.0,
+      "travel_time_hours": 4.2,
+      "activities": [
+       "beach",
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Cancún is a popular Caribbean tourist destination on the northeast tip of Mexico's Yucatán Peninsula, in Quintana Roo, which also is called the Mexican Caribbean. In addition to 22 km (14 miles) of beaches, you'll find a wide variety of resorts, spas, golf courses, night clubs, and shopping malls.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cancun_Strand_Luftbild_%2822143397586%29.jpg/1280px-Cancun_Strand_Luftbild_%2822143397586%29.jpg"
+     },
+     "group_score": 0.0,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3
+       ],
+       "summary": "Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [
+      3
+     ],
+     "explanation": "Cancun scores 0/100 for the group, favoring the highest average score. Sam is best served (96/100). Marcus is least satisfied because climate 'tropical' is not in preferred climates. Trade-off: Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it."
+    }
+   ]
+  },
+  "maximin": {
+   "label": "giving more weight to the least-satisfied member",
+   "recommendations": [
+    {
+     "destination": {
+      "id": 43,
+      "name": "Mexico City",
+      "country": "Mexico",
+      "region": "Mexico City",
+      "climate": "mild",
+      "dest_type": "city",
+      "est_cost": 627.0,
+      "travel_time_hours": 5.1,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Mexico City (Spanish: México, Ciudad de México or CDMX) is the capital of the Mexican Republic, the most populous city in the country, and one of the most important financial and cultural centers of the American continent. The city center is built on the ruins of the Aztec capital Tenochtitlan, and ",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg/1280px-Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg"
+     },
+     "group_score": 64.3,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 64.3,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Mexico City scores 64/100 for the group, giving more weight to the least-satisfied member. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 1,
+      "name": "Lisbon",
+      "country": "Portugal",
+      "region": "Lisbon District",
+      "climate": "mild",
+      "dest_type": "coastal city",
+      "est_cost": 564.0,
+      "travel_time_hours": 8.2,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Lisbon (Portuguese: Lisboa) is the capital of Portugal situated on seven hills at the wide mouth of the river Tagus (Tejo) where it meets the Atlantic Ocean. With 545,000 residents in the city and 3.0 million in the Lisbon Region (2024) and a thriving mix of Portugal's rich history and vivid contemp",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg/1280px-Lisboa_-_Portugal_%2852597836992%29.jpg"
+     },
+     "group_score": 63.9,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.9,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Lisbon scores 64/100 for the group, giving more weight to the least-satisfied member. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 22,
+      "name": "Marrakesh",
+      "country": "Morocco",
+      "region": "Marrakesh-Safi",
+      "climate": "arid",
+      "dest_type": "cultural",
+      "est_cost": 285.0,
+      "travel_time_hours": 8.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "Marrakech (Arabic: مراكش, Berber: ⴰⵎⵓⵔⴰⴽⵓⵛ), also spelt Marrakesh, is one of the imperial cities of Morocco. Marrakech is the main tourist destination in Morocco.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg/1280px-Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg"
+     },
+     "group_score": 63.0,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.0,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Marrakesh scores 63/100 for the group, giving more weight to the least-satisfied member. Sam is best served (96/100). Priya is least satisfied because climate 'arid' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 27,
+      "name": "Tokyo",
+      "country": "Japan",
+      "region": "Tokyo",
+      "climate": "temperate",
+      "dest_type": "city",
+      "est_cost": 537.0,
+      "travel_time_hours": 13.9,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "thumb|240px|The bulk of the Tokyo Metropolitan Government Building, [[Tokyo/Shinjuku|Shinjuku]] :Tokyo can be broadly divided into the \"23 special wards\", \"Tama region\" and \"Islands\". This article is about the 23 special wards of Tokyo, which corresponds to what many think of as the \"city of Tokyo\".",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1280px-Skyscrapers_of_Shinjuku_2009_January.jpg"
+     },
+     "group_score": 58.2,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 58.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "travel time 13.9h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Tokyo scores 58/100 for the group, giving more weight to the least-satisfied member. Marcus is best served (96/100). Priya is least satisfied because climate 'temperate' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 31,
+      "name": "Bali",
+      "country": "Indonesia",
+      "region": "Bali",
+      "climate": "tropical",
+      "dest_type": "island",
+      "est_cost": 234.0,
+      "travel_time_hours": 20.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "thumb|right|400px|Puri Saren Agung (Water Palace) in central Ubud Ubud, a town in central Bali of around 75,000 people (2020), is regarded as the cultural centre of Bali. It is famous as an arts and crafts hub, and much of the town and nearby villages seems to consist of artists' workshops and galle",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Odalan_preparation_inside_a_pura.jpg"
+     },
+     "group_score": 42.5,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 66.2,
+       "hard_violations": [],
+       "reasons": [
+        "travel time 20.8h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 42.5,
+       "hard_violations": [
+        "Nothing over 14h flying"
+       ],
+       "reasons": [
+        "violates a fixed condition: Nothing over 14h flying",
+        "travel time 20.8h exceeds limit 14.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        3
+       ],
+       "summary": "Dani has a fixed condition this destination breaks: Nothing over 14h flying",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Bali scores 42/100 for the group, giving more weight to the least-satisfied member. Sam is best served (96/100). Dani is least satisfied because violates a fixed condition: Nothing over 14h flying. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 10,
+      "name": "Reykjavik",
+      "country": "Iceland",
+      "region": "Capital Region",
+      "climate": "cold",
+      "dest_type": "nature",
+      "est_cost": 921.0,
+      "travel_time_hours": 6.2,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife"
+      ],
+      "description": "Reykjavík is the capital of and largest city in Iceland and with an urban area population of around 233,000 (2019), it is the home to two-thirds of Iceland's population. It is the centre of culture and life of the Icelandic people, and is one of the focal points of tourism in Iceland.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg/1280px-Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg"
+     },
+     "group_score": 28.1,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 28.1,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 87.5,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.02
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Reykjavik scores 28/100 for the group, giving more weight to the least-satisfied member. Sam is best served (88/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 41,
+      "name": "New York",
+      "country": "United States",
+      "region": "New York",
+      "climate": "continental",
+      "dest_type": "city",
+      "est_cost": 1089.0,
+      "travel_time_hours": 1.7,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Wall Street. Madison Avenue.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/1280px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg"
+     },
+     "group_score": 20.4,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 20.4,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.17
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "New York scores 20/100 for the group, giving more weight to the least-satisfied member. Marcus is best served (96/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 44,
+      "name": "Cancun",
+      "country": "Mexico",
+      "region": "Quintana Roo",
+      "climate": "tropical",
+      "dest_type": "coastal city",
+      "est_cost": 453.0,
+      "travel_time_hours": 4.2,
+      "activities": [
+       "beach",
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Cancún is a popular Caribbean tourist destination on the northeast tip of Mexico's Yucatán Peninsula, in Quintana Roo, which also is called the Mexican Caribbean. In addition to 22 km (14 miles) of beaches, you'll find a wide variety of resorts, spas, golf courses, night clubs, and shopping malls.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cancun_Strand_Luftbild_%2822143397586%29.jpg/1280px-Cancun_Strand_Luftbild_%2822143397586%29.jpg"
+     },
+     "group_score": 0.0,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3
+       ],
+       "summary": "Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [
+      3
+     ],
+     "explanation": "Cancun scores 0/100 for the group, giving more weight to the least-satisfied member. Sam is best served (96/100). Marcus is least satisfied because climate 'tropical' is not in preferred climates. Trade-off: Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it."
+    }
+   ]
+  },
+  "balanced": {
+   "label": "balancing the average against the least-satisfied member",
+   "recommendations": [
+    {
+     "destination": {
+      "id": 43,
+      "name": "Mexico City",
+      "country": "Mexico",
+      "region": "Mexico City",
+      "climate": "mild",
+      "dest_type": "city",
+      "est_cost": 627.0,
+      "travel_time_hours": 5.1,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Mexico City (Spanish: México, Ciudad de México or CDMX) is the capital of the Mexican Republic, the most populous city in the country, and one of the most important financial and cultural centers of the American continent. The city center is built on the ruins of the Aztec capital Tenochtitlan, and ",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg/1280px-Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg"
+     },
+     "group_score": 73.6,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 64.3,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Mexico City scores 74/100 for the group, balancing the average against the least-satisfied member. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 1,
+      "name": "Lisbon",
+      "country": "Portugal",
+      "region": "Lisbon District",
+      "climate": "mild",
+      "dest_type": "coastal city",
+      "est_cost": 564.0,
+      "travel_time_hours": 8.2,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Lisbon (Portuguese: Lisboa) is the capital of Portugal situated on seven hills at the wide mouth of the river Tagus (Tejo) where it meets the Atlantic Ocean. With 545,000 residents in the city and 3.0 million in the Lisbon Region (2024) and a thriving mix of Portugal's rich history and vivid contemp",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg/1280px-Lisboa_-_Portugal_%2852597836992%29.jpg"
+     },
+     "group_score": 73.3,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.9,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Lisbon scores 73/100 for the group, balancing the average against the least-satisfied member. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 22,
+      "name": "Marrakesh",
+      "country": "Morocco",
+      "region": "Marrakesh-Safi",
+      "climate": "arid",
+      "dest_type": "cultural",
+      "est_cost": 285.0,
+      "travel_time_hours": 8.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "Marrakech (Arabic: مراكش, Berber: ⴰⵎⵓⵔⴰⴽⵓⵛ), also spelt Marrakesh, is one of the imperial cities of Morocco. Marrakech is the main tourist destination in Morocco.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg/1280px-Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg"
+     },
+     "group_score": 71.9,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.0,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Marrakesh scores 72/100 for the group, balancing the average against the least-satisfied member. Sam is best served (96/100). Priya is least satisfied because climate 'arid' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 27,
+      "name": "Tokyo",
+      "country": "Japan",
+      "region": "Tokyo",
+      "climate": "temperate",
+      "dest_type": "city",
+      "est_cost": 537.0,
+      "travel_time_hours": 13.9,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "thumb|240px|The bulk of the Tokyo Metropolitan Government Building, [[Tokyo/Shinjuku|Shinjuku]] :Tokyo can be broadly divided into the \"23 special wards\", \"Tama region\" and \"Islands\". This article is about the 23 special wards of Tokyo, which corresponds to what many think of as the \"city of Tokyo\".",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1280px-Skyscrapers_of_Shinjuku_2009_January.jpg"
+     },
+     "group_score": 70.2,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 58.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "travel time 13.9h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Tokyo scores 70/100 for the group, balancing the average against the least-satisfied member. Marcus is best served (96/100). Priya is least satisfied because climate 'temperate' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 31,
+      "name": "Bali",
+      "country": "Indonesia",
+      "region": "Bali",
+      "climate": "tropical",
+      "dest_type": "island",
+      "est_cost": 234.0,
+      "travel_time_hours": 20.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "thumb|right|400px|Puri Saren Agung (Water Palace) in central Ubud Ubud, a town in central Bali of around 75,000 people (2020), is regarded as the cultural centre of Bali. It is famous as an arts and crafts hub, and much of the town and nearby villages seems to consist of artists' workshops and galle",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Odalan_preparation_inside_a_pura.jpg"
+     },
+     "group_score": 57.5,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 66.2,
+       "hard_violations": [],
+       "reasons": [
+        "travel time 20.8h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 42.5,
+       "hard_violations": [
+        "Nothing over 14h flying"
+       ],
+       "reasons": [
+        "violates a fixed condition: Nothing over 14h flying",
+        "travel time 20.8h exceeds limit 14.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        3
+       ],
+       "summary": "Dani has a fixed condition this destination breaks: Nothing over 14h flying",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Bali scores 58/100 for the group, balancing the average against the least-satisfied member. Sam is best served (96/100). Dani is least satisfied because violates a fixed condition: Nothing over 14h flying. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 10,
+      "name": "Reykjavik",
+      "country": "Iceland",
+      "region": "Capital Region",
+      "climate": "cold",
+      "dest_type": "nature",
+      "est_cost": 921.0,
+      "travel_time_hours": 6.2,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife"
+      ],
+      "description": "Reykjavík is the capital of and largest city in Iceland and with an urban area population of around 233,000 (2019), it is the home to two-thirds of Iceland's population. It is the centre of culture and life of the Icelandic people, and is one of the focal points of tourism in Iceland.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg/1280px-Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg"
+     },
+     "group_score": 48.1,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 28.1,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 87.5,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.02
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Reykjavik scores 48/100 for the group, balancing the average against the least-satisfied member. Sam is best served (88/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 41,
+      "name": "New York",
+      "country": "United States",
+      "region": "New York",
+      "climate": "continental",
+      "dest_type": "city",
+      "est_cost": 1089.0,
+      "travel_time_hours": 1.7,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Wall Street. Madison Avenue.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/1280px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg"
+     },
+     "group_score": 45.7,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 20.4,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.17
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "New York scores 46/100 for the group, balancing the average against the least-satisfied member. Marcus is best served (96/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 44,
+      "name": "Cancun",
+      "country": "Mexico",
+      "region": "Quintana Roo",
+      "climate": "tropical",
+      "dest_type": "coastal city",
+      "est_cost": 453.0,
+      "travel_time_hours": 4.2,
+      "activities": [
+       "beach",
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Cancún is a popular Caribbean tourist destination on the northeast tip of Mexico's Yucatán Peninsula, in Quintana Roo, which also is called the Mexican Caribbean. In addition to 22 km (14 miles) of beaches, you'll find a wide variety of resorts, spas, golf courses, night clubs, and shopping malls.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cancun_Strand_Luftbild_%2822143397586%29.jpg/1280px-Cancun_Strand_Luftbild_%2822143397586%29.jpg"
+     },
+     "group_score": 0.0,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3
+       ],
+       "summary": "Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [
+      3
+     ],
+     "explanation": "Cancun scores 0/100 for the group, balancing the average against the least-satisfied member. Sam is best served (96/100). Marcus is least satisfied because climate 'tropical' is not in preferred climates. Trade-off: Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it."
+    }
+   ]
+  },
+  "avoid_dislikes": {
+   "label": "avoiding destinations anyone strongly dislikes",
+   "recommendations": [
+    {
+     "destination": {
+      "id": 43,
+      "name": "Mexico City",
+      "country": "Mexico",
+      "region": "Mexico City",
+      "climate": "mild",
+      "dest_type": "city",
+      "est_cost": 627.0,
+      "travel_time_hours": 5.1,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Mexico City (Spanish: México, Ciudad de México or CDMX) is the capital of the Mexican Republic, the most populous city in the country, and one of the most important financial and cultural centers of the American continent. The city center is built on the ruins of the Aztec capital Tenochtitlan, and ",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg/1280px-Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg"
+     },
+     "group_score": 82.9,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 64.3,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Mexico City scores 83/100 for the group, avoiding destinations anyone strongly dislikes. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 1,
+      "name": "Lisbon",
+      "country": "Portugal",
+      "region": "Lisbon District",
+      "climate": "mild",
+      "dest_type": "coastal city",
+      "est_cost": 564.0,
+      "travel_time_hours": 8.2,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Lisbon (Portuguese: Lisboa) is the capital of Portugal situated on seven hills at the wide mouth of the river Tagus (Tejo) where it meets the Atlantic Ocean. With 545,000 residents in the city and 3.0 million in the Lisbon Region (2024) and a thriving mix of Portugal's rich history and vivid contemp",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg/1280px-Lisboa_-_Portugal_%2852597836992%29.jpg"
+     },
+     "group_score": 82.8,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.9,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Lisbon scores 83/100 for the group, avoiding destinations anyone strongly dislikes. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 27,
+      "name": "Tokyo",
+      "country": "Japan",
+      "region": "Tokyo",
+      "climate": "temperate",
+      "dest_type": "city",
+      "est_cost": 537.0,
+      "travel_time_hours": 13.9,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "thumb|240px|The bulk of the Tokyo Metropolitan Government Building, [[Tokyo/Shinjuku|Shinjuku]] :Tokyo can be broadly divided into the \"23 special wards\", \"Tama region\" and \"Islands\". This article is about the 23 special wards of Tokyo, which corresponds to what many think of as the \"city of Tokyo\".",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1280px-Skyscrapers_of_Shinjuku_2009_January.jpg"
+     },
+     "group_score": 82.2,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 58.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "travel time 13.9h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Tokyo scores 82/100 for the group, avoiding destinations anyone strongly dislikes. Marcus is best served (96/100). Priya is least satisfied because climate 'temperate' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 22,
+      "name": "Marrakesh",
+      "country": "Morocco",
+      "region": "Marrakesh-Safi",
+      "climate": "arid",
+      "dest_type": "cultural",
+      "est_cost": 285.0,
+      "travel_time_hours": 8.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "Marrakech (Arabic: مراكش, Berber: ⴰⵎⵓⵔⴰⴽⵓⵛ), also spelt Marrakesh, is one of the imperial cities of Morocco. Marrakech is the main tourist destination in Morocco.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg/1280px-Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg"
+     },
+     "group_score": 80.8,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.0,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Marrakesh scores 81/100 for the group, avoiding destinations anyone strongly dislikes. Sam is best served (96/100). Priya is least satisfied because climate 'arid' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 31,
+      "name": "Bali",
+      "country": "Indonesia",
+      "region": "Bali",
+      "climate": "tropical",
+      "dest_type": "island",
+      "est_cost": 234.0,
+      "travel_time_hours": 20.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "thumb|right|400px|Puri Saren Agung (Water Palace) in central Ubud Ubud, a town in central Bali of around 75,000 people (2020), is regarded as the cultural centre of Bali. It is famous as an arts and crafts hub, and much of the town and nearby villages seems to consist of artists' workshops and galle",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Odalan_preparation_inside_a_pura.jpg"
+     },
+     "group_score": 72.4,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 66.2,
+       "hard_violations": [],
+       "reasons": [
+        "travel time 20.8h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 42.5,
+       "hard_violations": [
+        "Nothing over 14h flying"
+       ],
+       "reasons": [
+        "violates a fixed condition: Nothing over 14h flying",
+        "travel time 20.8h exceeds limit 14.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        3
+       ],
+       "summary": "Dani has a fixed condition this destination breaks: Nothing over 14h flying",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Bali scores 72/100 for the group, avoiding destinations anyone strongly dislikes. Sam is best served (96/100). Dani is least satisfied because violates a fixed condition: Nothing over 14h flying. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 41,
+      "name": "New York",
+      "country": "United States",
+      "region": "New York",
+      "climate": "continental",
+      "dest_type": "city",
+      "est_cost": 1089.0,
+      "travel_time_hours": 1.7,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Wall Street. Madison Avenue.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/1280px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg"
+     },
+     "group_score": 71.0,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 20.4,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.17
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "New York scores 71/100 for the group, avoiding destinations anyone strongly dislikes. Marcus is best served (96/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 10,
+      "name": "Reykjavik",
+      "country": "Iceland",
+      "region": "Capital Region",
+      "climate": "cold",
+      "dest_type": "nature",
+      "est_cost": 921.0,
+      "travel_time_hours": 6.2,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife"
+      ],
+      "description": "Reykjavík is the capital of and largest city in Iceland and with an urban area population of around 233,000 (2019), it is the home to two-thirds of Iceland's population. It is the centre of culture and life of the Icelandic people, and is one of the focal points of tourism in Iceland.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg/1280px-Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg"
+     },
+     "group_score": 68.2,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 28.1,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 87.5,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.02
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Reykjavik scores 68/100 for the group, avoiding destinations anyone strongly dislikes. Sam is best served (88/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 44,
+      "name": "Cancun",
+      "country": "Mexico",
+      "region": "Quintana Roo",
+      "climate": "tropical",
+      "dest_type": "coastal city",
+      "est_cost": 453.0,
+      "travel_time_hours": 4.2,
+      "activities": [
+       "beach",
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Cancún is a popular Caribbean tourist destination on the northeast tip of Mexico's Yucatán Peninsula, in Quintana Roo, which also is called the Mexican Caribbean. In addition to 22 km (14 miles) of beaches, you'll find a wide variety of resorts, spas, golf courses, night clubs, and shopping malls.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cancun_Strand_Luftbild_%2822143397586%29.jpg/1280px-Cancun_Strand_Luftbild_%2822143397586%29.jpg"
+     },
+     "group_score": 0.0,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3
+       ],
+       "summary": "Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [
+      3
+     ],
+     "explanation": "Cancun scores 0/100 for the group, avoiding destinations anyone strongly dislikes. Sam is best served (96/100). Marcus is least satisfied because climate 'tropical' is not in preferred climates. Trade-off: Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it."
+    }
+   ]
+  },
+  "complementary": {
+   "label": "rewarding destinations that satisfy many members at once",
+   "recommendations": [
+    {
+     "destination": {
+      "id": 1,
+      "name": "Lisbon",
+      "country": "Portugal",
+      "region": "Lisbon District",
+      "climate": "mild",
+      "dest_type": "coastal city",
+      "est_cost": 564.0,
+      "travel_time_hours": 8.2,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Lisbon (Portuguese: Lisboa) is the capital of Portugal situated on seven hills at the wide mouth of the river Tagus (Tejo) where it meets the Atlantic Ocean. With 545,000 residents in the city and 3.0 million in the Lisbon Region (2024) and a thriving mix of Portugal's rich history and vivid contemp",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg/1280px-Lisboa_-_Portugal_%2852597836992%29.jpg"
+     },
+     "group_score": 89.7,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.9,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Lisbon scores 90/100 for the group, rewarding destinations that satisfy many members at once. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 43,
+      "name": "Mexico City",
+      "country": "Mexico",
+      "region": "Mexico City",
+      "climate": "mild",
+      "dest_type": "city",
+      "est_cost": 627.0,
+      "travel_time_hours": 5.1,
+      "activities": [
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Mexico City (Spanish: México, Ciudad de México or CDMX) is the capital of the Mexican Republic, the most populous city in the country, and one of the most important financial and cultural centers of the American continent. The city center is built on the ruins of the Aztec capital Tenochtitlan, and ",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg/1280px-Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg"
+     },
+     "group_score": 89.7,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 64.3,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'mild' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Mexico City scores 90/100 for the group, rewarding destinations that satisfy many members at once. Sam is best served (96/100). Priya is least satisfied because climate 'mild' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 22,
+      "name": "Marrakesh",
+      "country": "Morocco",
+      "region": "Marrakesh-Safi",
+      "climate": "arid",
+      "dest_type": "cultural",
+      "est_cost": 285.0,
+      "travel_time_hours": 8.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "Marrakech (Arabic: مراكش, Berber: ⴰⵎⵓⵔⴰⴽⵓⵛ), also spelt Marrakesh, is one of the imperial cities of Morocco. Marrakech is the main tourist destination in Morocco.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg/1280px-Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg"
+     },
+     "group_score": 88.5,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 63.0,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'arid' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Marrakesh scores 88/100 for the group, rewarding destinations that satisfy many members at once. Sam is best served (96/100). Priya is least satisfied because climate 'arid' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 27,
+      "name": "Tokyo",
+      "country": "Japan",
+      "region": "Tokyo",
+      "climate": "temperate",
+      "dest_type": "city",
+      "est_cost": 537.0,
+      "travel_time_hours": 13.9,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping",
+       "wellness"
+      ],
+      "description": "thumb|240px|The bulk of the Tokyo Metropolitan Government Building, [[Tokyo/Shinjuku|Shinjuku]] :Tokyo can be broadly divided into the \"23 special wards\", \"Tama region\" and \"Islands\". This article is about the 23 special wards of Tokyo, which corresponds to what many think of as the \"city of Tokyo\".",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1280px-Skyscrapers_of_Shinjuku_2009_January.jpg"
+     },
+     "group_score": 79.4,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 58.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "travel time 13.9h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 78.6,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'temperate' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Tokyo scores 79/100 for the group, rewarding destinations that satisfy many members at once. Marcus is best served (96/100). Priya is least satisfied because climate 'temperate' is not in preferred climates. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 31,
+      "name": "Bali",
+      "country": "Indonesia",
+      "region": "Bali",
+      "climate": "tropical",
+      "dest_type": "island",
+      "est_cost": 234.0,
+      "travel_time_hours": 20.8,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "thumb|right|400px|Puri Saren Agung (Water Palace) in central Ubud Ubud, a town in central Bali of around 75,000 people (2020), is regarded as the cultural centre of Bali. It is famous as an arts and crafts hub, and much of the town and nearby villages seems to consist of artists' workshops and galle",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Odalan_preparation_inside_a_pura.jpg"
+     },
+     "group_score": 73.5,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 66.2,
+       "hard_violations": [],
+       "reasons": [
+        "travel time 20.8h exceeds limit 8.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.2,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 42.5,
+       "hard_violations": [
+        "Nothing over 14h flying"
+       ],
+       "reasons": [
+        "violates a fixed condition: Nothing over 14h flying",
+        "travel time 20.8h exceeds limit 14.0h",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        3
+       ],
+       "summary": "Dani has a fixed condition this destination breaks: Nothing over 14h flying",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Bali scores 74/100 for the group, rewarding destinations that satisfy many members at once. Sam is best served (96/100). Dani is least satisfied because violates a fixed condition: Nothing over 14h flying. Trade-off: Marcus, Dani, Sam want this activity while Priya, Dani avoid it."
+    },
+    {
+     "destination": {
+      "id": 41,
+      "name": "New York",
+      "country": "United States",
+      "region": "New York",
+      "climate": "continental",
+      "dest_type": "city",
+      "est_cost": 1089.0,
+      "travel_time_hours": 1.7,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Wall Street. Madison Avenue.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/1280px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg"
+     },
+     "group_score": 72.6,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 20.4,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 96.4,
+       "hard_violations": [],
+       "reasons": []
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'continental' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.17
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "New York scores 73/100 for the group, rewarding destinations that satisfy many members at once. Marcus is best served (96/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 1089 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 10,
+      "name": "Reykjavik",
+      "country": "Iceland",
+      "region": "Capital Region",
+      "climate": "cold",
+      "dest_type": "nature",
+      "est_cost": 921.0,
+      "travel_time_hours": 6.2,
+      "activities": [
+       "culture",
+       "food",
+       "history",
+       "nature",
+       "nightlife"
+      ],
+      "description": "Reykjavík is the capital of and largest city in Iceland and with an urban area population of around 233,000 (2019), it is the home to two-thirds of Iceland's population. It is the centre of culture and life of the Icelandic people, and is one of the focal points of tourism in Iceland.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg/1280px-Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg"
+     },
+     "group_score": 70.9,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 28.1,
+       "hard_violations": [
+        "No more than $900 pp"
+       ],
+       "reasons": [
+        "violates a fixed condition: No more than $900 pp",
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 85.7,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'cold' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 87.5,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "budget",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "summary": "estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam",
+       "severity": 0.02
+      },
+      {
+       "kind": "activity",
+       "member_ids": [
+        2,
+        3,
+        4,
+        1,
+        3
+       ],
+       "summary": "Marcus, Dani, Sam want this activity while Priya, Dani avoid it",
+       "severity": 0.8
+      },
+      {
+       "kind": "fixed_condition",
+       "member_ids": [
+        1
+       ],
+       "summary": "Priya has a fixed condition this destination breaks: No more than $900 pp",
+       "severity": 1.0
+      }
+     ],
+     "vetoed_by": [],
+     "explanation": "Reykjavik scores 71/100 for the group, rewarding destinations that satisfy many members at once. Sam is best served (88/100). Priya is least satisfied because violates a fixed condition: No more than $900 pp. Trade-off: estimated cost 921 is over budget for Priya, but within budget for Marcus, Dani, Sam."
+    },
+    {
+     "destination": {
+      "id": 44,
+      "name": "Cancun",
+      "country": "Mexico",
+      "region": "Quintana Roo",
+      "climate": "tropical",
+      "dest_type": "coastal city",
+      "est_cost": 453.0,
+      "travel_time_hours": 4.2,
+      "activities": [
+       "beach",
+       "culture",
+       "food",
+       "nature",
+       "nightlife",
+       "shopping"
+      ],
+      "description": "Cancún is a popular Caribbean tourist destination on the northeast tip of Mexico's Yucatán Peninsula, in Quintana Roo, which also is called the Mexican Caribbean. In addition to 22 km (14 miles) of beaches, you'll find a wide variety of resorts, spas, golf courses, night clubs, and shopping malls.",
+      "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cancun_Strand_Luftbild_%2822143397586%29.jpg/1280px-Cancun_Strand_Luftbild_%2822143397586%29.jpg"
+     },
+     "group_score": 0.0,
+     "member_scores": [
+      {
+       "member_id": 1,
+       "score": 89.3,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 2,
+       "score": 71.4,
+       "hard_violations": [],
+       "reasons": [
+        "climate 'tropical' is not in preferred climates",
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 3,
+       "score": 82.1,
+       "hard_violations": [],
+       "reasons": [
+        "matches something this member actively dislikes"
+       ]
+      },
+      {
+       "member_id": 4,
+       "score": 95.8,
+       "hard_violations": [],
+       "reasons": []
+      }
+     ],
+     "conflicts": [
+      {
+       "kind": "activity",
+       "member_ids": [
+        1,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3
+       ],
+       "summary": "Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it",
+       "severity": 0.8
+      }
+     ],
+     "vetoed_by": [
+      3
+     ],
+     "explanation": "Cancun scores 0/100 for the group, rewarding destinations that satisfy many members at once. Sam is best served (96/100). Marcus is least satisfied because climate 'tropical' is not in preferred climates. Trade-off: Priya, Marcus, Dani, Sam want this activity while Priya, Marcus, Dani avoid it."
+    }
+   ]
+  }
+ }
+};
+
+const S = { tab:"compare", view:"conflict", strategy:"average", actor:1,
+            state:"ready", open:null, ratings:{}, vetoes:new Set(), approvals:new Set(),
+            relaxed:new Set(), log:[], preview:false };
+
+const $ = (s,r=document)=>r.querySelector(s);
+function el(t,a={},kids=[]){
+  const n=document.createElement(t);
+  for(const [k,v] of Object.entries(a)){
+    if(k==="class")n.className=v;
+    else if(k==="text")n.textContent=v;
+    else if(k==="html")n.innerHTML=v;
+    else if(k.startsWith("on"))n.addEventListener(k.slice(2),v);
+    else if(v!==null&&v!==false)n.setAttribute(k,v===true?"":v);
+  }
+  for(const c of [].concat(kids))if(c!=null)n.append(c);
+  return n;
+}
+const members=()=>DATA.members;
+const mem=id=>members().find(m=>m.id===id)||{};
+const N=id=>mem(id).name||"?";
+const AN=id=>mem(id).initials||"?";
+const cls=id=>"abcd"[id-1]||"d";
+const resc=()=>DATA.strategies[S.strategy].recommendations;
+const V=()=>S.view==="conflict";
+
+function events(actor,name,dest,kind){
+  S.log.unshift({t:new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}), actor, name, dest, kind});
+}
+function bandScore(v){ return v>=70?"var(--green)":v>=45?"var(--amber)":"var(--salmon)"; }
+
+/* ── atoms ─────────────────────────────────── */
+function av(id,extra=""){
+  return el("span",{class:`av ${cls(id)} ${extra}`,text:AN(id),title:N(id)});
+}
+function fit(m){
+  const v=Math.round(m.score);
+  return el("div",{class:"fit",title:(m.hard_violations[0]||m.reasons[0]||"well served")},[
+    el("span",{class:"v n",style:`color:${bandScore(v)}`,text:v}),
+    el("span",{class:"bar"},[el("i",{style:`width:${v}%;background:${bandScore(v)}`})])
+  ]);
+}
+function spread(r){
+  const s=r.member_scores.map(m=>Math.max(2,Math.min(100,m.score)));
+  const lo=Math.min(...s),hi=Math.max(...s),wide=hi-lo>=35;
+  const n=el("div",{class:`spread${V()&&wide?" wide":""}`,title:`${lo} to ${hi}`,role:"img","aria-label":`scores range ${Math.round(lo)} to ${Math.round(hi)}`},[
+    el("span",{class:"tr"}),
+    el("span",{class:"rg",style:`left:${lo}%;width:${Math.max(hi-lo,3)}%`})
+  ]);
+  r.member_scores.forEach(m=>n.append(el("span",{class:"pt",style:`left:calc(${Math.min(100,m.score)}% - 2.5px)`})));
+  return n;
+}
+
+/* ── compare ───────────────────────────────── */
+function board(){
+  if(S.state==="loading"){
+    const rows=[];
+    for(let i=0;i<6;i++)rows.push(el("tr",{},[
+      el("td",{},[el("div",{class:"dwrap"},[el("div",{class:"sk",style:"width:38px;height:38px;border-radius:11px"}),el("div",{},[el("div",{class:"sk",style:"width:120px"}),el("div",{class:"sk",style:"width:80px;margin-top:6px"})])])]),
+      ...members().map(()=>el("td",{},[el("div",{class:"sk",style:"width:36px;margin:0 auto"})])),
+      el("td",{},[el("div",{class:"sk",style:"width:28px"})]),
+      el("td",{},[el("div",{class:"sk",style:"width:100px"})]),
+      el("td",{},[el("div",{class:"sk",style:"width:70px"})])
+    ]));
+    return el("div",{class:"card"},[el("div",{class:"scroller"},[el("table",{},[head(),el("tbody",{},rows)])])]);
+  }
+  if(S.state==="error"){
+    return el("div",{class:"card"},[el("div",{class:"empty"},[
+      el("span",{class:"mark",text:"!"}),
+      el("p",{style:"font-weight:700;margin:0 0 4px",text:"Can't rank right now"}),
+      el("p",{class:"sub",style:"margin:0 0 14px",text:"Ranking service is down. Nobody loses their answers."}),
+      el("button",{class:"btn go",type:"button",onClick:()=>{S.state="ready";render();}},[ "Retry"])
+    ])]);
+  }
+  if(S.state==="empty"){
+    return el("div",{class:"card"},[el("div",{class:"empty"},[
+      el("span",{class:"mark",text:"+"}),
+      el("p",{style:"font-weight:700;margin:0 0 4px",text:"No travellers yet"}),
+      el("p",{class:"sub",style:"margin:0 0 14px",text:"Scores appear once the group is here."}),
+      el("button",{class:"btn go",type:"button",text:"Invite the group"})
+    ])]);
+  }
+
+  const tb=el("tbody");
+  resc().forEach((r,i)=>{
+    const vetoed=S.vetoes.has(r.destination.name)||r.vetoed_by.length>0;
+    const worst=r.conflicts.slice().sort((a,b)=>b.severity-a.severity)[0];
+    const tr=el("tr",{class:"pick"+(vetoed?" out":""),tabindex:"0",
+      onClick:()=>openDrawer(r.destination.name),
+      onKeydown:e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openDrawer(r.destination.name);}}
+    },[
+      el("td",{},[el("div",{class:"dwrap"},[
+        el("span",{class:"rank n",text:i+1}),
+        el("img",{class:"thumb",src:r.destination.image_url,alt:"",loading:"lazy"}),
+        el("span",{},[
+          el("span",{class:"nm",text:r.destination.name}),
+          el("span",{class:"meta"},[
+            el("span",{text:r.destination.climate}),
+            el("span",{text:"·"}),
+            el("span",{class:"n",text:`$${Math.round(r.destination.est_cost)}`}),
+            el("span",{text:"·"}),
+            el("span",{class:"n",text:`${r.destination.travel_time_hours}h`})
+          ])
+        ])
+      ])]),
+      ...(V()?members().map(m=>el("td",{},[fit(r.member_scores.find(x=>x.member_id===m.id))])):[]),
+      el("td",{},[el("span",{class:"g n",style:vetoed?"color:var(--ink-3)":`color:${bandScore(r.group_score)}`,text:vetoed?"—":Math.round(r.group_score)})]),
+      ...(V()?[el("td",{},[
+        vetoed?el("span",{class:"chip bad",text:"Vetoed"}) :
+        worst?el("span",{class:"chip bad"},[
+          el("span",{class:"dots"},worst.member_ids.map(id=>av(id))),
+          el("span",{text:worst.kind.replace(/_/g," ")})
+        ]):el("span",{class:"chip good",text:"Clear"})
+      ])]:[]),
+      ...(V()?[el("td",{},[spread(r)])]:[]),
+      el("td",{},[el("button",{class:"btn sm go",type:"button",disabled:vetoed,text:"Open"})])
+    ]);
+    tb.append(tr);
+  });
+  return el("div",{class:"card"},[el("div",{class:"scroller"},[el("table",{},[head(),tb])])]);
+}
+function head(){
+  return el("thead",{},[el("tr",{},[
+    el("th",{text:"Where"}),
+    ...(V()?members().map(m=>el("th",{class:"m"},[av(m.id)])):[]),
+    el("th",{text:"Group"}),
+    ...(V()?[el("th",{text:"Friction"})]:[]),
+    ...(V()?[el("th",{text:"Disagreement"})]:[]),
+    el("th",{text:""})
+  ])]);
+}
+
+/* ── drawer ────────────────────────────────── */
+function ring(done,total){
+  const r=26,c=2*Math.PI*r,p=total?done/total:0;
+  return el("div",{class:"ring"},[
+    el("span",{html:`<svg width="64" height="64"><circle cx="32" cy="32" r="${r}" fill="none" stroke="var(--line)" stroke-width="7"/><circle cx="32" cy="32" r="${r}" fill="none" stroke="${p===1?"var(--green)":"var(--mint)"}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}"/></svg>`}),
+    el("span",{class:"lab n",text:`${done}/${total}`})
+  ]);
+}
+function openDrawer(name){
+  const r=resc().find(x=>x.destination.name===name);
+  if(!r)return;
+  S.open=name; S.preview=false; paintDrawer(); $("#drawer").classList.add("on"); $("#veil").classList.add("on");
+  $("#drawer").querySelector("button")?.focus();
+}
+function closeDrawer(){ S.open=null; $("#drawer").classList.remove("on"); $("#veil").classList.remove("on"); render(); }
+
+function paintDrawer(){
+  const name=S.open;
+  const r=resc().find(x=>x.destination.name===name); const d=$("#drawer");
+  if(!r){d.innerHTML="";return;}
+  d.innerHTML="";
+  const vetoed=S.vetoes.has(r.destination.name)||r.vetoed_by.length>0;
+
+  d.append(el("div",{class:"dhead"},[
+    el("img",{class:"thumb",src:r.destination.image_url,alt:""}),
+    el("div",{style:"flex:1;min-width:0"},[
+      el("div",{class:"nm",style:"font-size:16px",text:r.destination.name}),
+      el("div",{class:"meta"},[
+        el("span",{text:r.destination.country}),
+        el("span",{text:"·"}),
+        el("span",{class:"n",text:`$${Math.round(r.destination.est_cost)}`}),
+        el("span",{text:"·"}),
+        el("span",{class:"n",text:`${r.destination.travel_time_hours}h`})
+      ])
+    ]),
+    el("button",{class:"btn sm",type:"button","aria-label":"Close","onClick":closeDrawer},["✕"])
+  ]));
+
+  const body=el("div",{class:"dbody"});
+
+  if(V()){
+    body.append(el("h3",{class:"sec",text:"Fit per person"}));
+    for(const m of members()){
+      const ms=r.member_scores.find(x=>x.member_id===m.id);
+      const v=Math.round(ms.score), bad=ms.hard_violations.length>0;
+      body.append(el("div",{class:"fitrow",title:ms.hard_violations[0]||ms.reasons[0]||"well served"},[
+        av(m.id),
+        el("div",{},[
+          el("div",{class:"sub",style:"font-size:11.5px;font-weight:650;color:var(--ink)",text:m.name}),
+          el("div",{class:"t"},[el("i",{style:`width:${v}%;background:${bandScore(v)}`})])
+        ]),
+        el("span",{class:"s n",style:`color:${bandScore(v)}`,text:bad?"!"+v:v})
+      ]));
+    }
+  }
+
+  if(V()&&r.conflicts.length){
+    body.append(el("h3",{class:"sec",text:"In the way"}));
+    for(const c of r.conflicts){
+      body.append(el("div",{class:"note",style:"margin-bottom:8px"},[
+        el("div",{style:"display:flex;align-items:center;gap:8px;margin-bottom:6px"},[
+          el("span",{class:"dots"},c.member_ids.map(id=>av(id))),
+          el("span",{class:"chip bad",text:c.kind.replace(/_/g," ")})
+        ]),
+        el("span",{text:c.summary})
+      ]));
+    }
+  }
+  if(V()){
+    body.append(el("h3",{class:"sec",text:"Why it sits here"}));
+    body.append(el("div",{class:"note",text:r.explanation}));
+  }
+
+  body.append(el("h3",{class:"sec",text:"My call"}));
+  const me=mem(S.actor);
+  const cur=(S.ratings[S.actor]||{})[name];
+  const opts=[["interested","Interested"],["interested_if","If…"],["not_interested","No"],["skip","Skip"]];
+  body.append(el("div",{class:"chipset"},opts.map(([k,l])=>
+    el("button",{class:"btn sm"+(cur===k?" go":""),type:"button","aria-pressed":cur===k?"true":"false",
+      onClick:()=>{(S.ratings[S.actor]||={})[name]=k;events(S.actor,me.name,name,k==="not_interested"?"rated no":"rated");paintDrawer();}
+    },[l]))));
+
+  body.append(el("h3",{class:"sec",text:"My limits"}));
+  body.append(el("div",{class:"chipset"},(me.conditions||[]).map(c=>{
+    const key=c.id, rel=S.relaxed.has(key);
+    return el("span",{class:"tag"+(c.status==="fixed"&&!rel?" fixed":"")},[
+      el("span",{text:c.text}),
+      c.status==="fixed"&&!rel?el("button",{class:"btn sm",type:"button",title:"Only you can relax this",
+        onClick:()=>{S.relaxed.add(key);events(S.actor,me.name,name,"condition changed");paintDrawer();}} ,["Relax"]):null
+    ]);
+  })));
+
+  if(V()){
+    body.append(el("h3",{class:"sec",text:"Change a plan"}));
+    if(!S.preview){
+      body.append(el("button",{class:"btn sm",type:"button",onClick:()=>{S.preview=true;paintDrawer();}},["Drop a day trip"]));
+    }else{
+      const hit=r.member_scores.filter(m=>m.score<70||m.hard_violations.length);
+      const locked=hit.some(m=>m.hard_violations.length);
+      body.append(el("div",{class:"note",style:locked?"background:var(--amber-wash)":"background:var(--green-soft)"},[
+        el("div",{class:"chipset",style:"margin-bottom:8px"},[
+          el("span",{class:"dots"},hit.map(m=>av(m.member_id))),
+          el("span",{class:"chip "+(locked?"mid":"good"),text:`${hit.length} touched`})
+        ]),
+        el("span",{text:locked?"A fixed limit blocks this. Only its owner can lift it.":"Nobody is blocked by a fixed limit."})
+      ]));
+      body.append(el("div",{class:"chipset",style:"align-items:center;margin-top:10px"},[
+        el("button",{class:"btn sm go",type:"button",disabled:locked,text:"Apply",onClick:()=>{events(S.actor,me.name,name,"activity changed");S.log[0].kind="plan changed";S.preview=false;paintDrawer();}}),
+        el("button",{class:"btn sm",type:"button",onClick:()=>{S.preview=false;paintDrawer();}},["Cancel"])
+      ]));
+    }
+  }
+
+  body.append(el("h3",{class:"sec",text:"Approval"}));
+  const done=members().filter(m=>S.approvals.has(m.id)).length;
+  body.append(el("div",{style:"display:flex;align-items:center;gap:14px;margin-bottom:8px"},[
+    ring(done,members().length),
+    el("div",{class:"sub",text:done===members().length?"Everyone in.":"Score isn't approval."})
+  ]));
+  for(const m of members()){
+    const on=S.approvals.has(m.id);
+    body.append(el("div",{class:"appr"},[
+      av(m.id), el("span",{style:"font-size:12.5px;font-weight:650",text:m.name}),
+      el("button",{class:"sw",type:"button","aria-pressed":on?"true":"false","aria-label":`${m.name} approves`,
+        onClick:()=>{on?S.approvals.delete(m.id):(S.approvals.add(m.id),events(m.id,m.name,name,"approved"));paintDrawer();}})
+    ]));
+  }
+
+  d.append(body);
+  d.append(el("div",{class:"dfoot"},[
+    el("button",{class:"btn go",type:"button",disabled:vetoed,text:S.vetoes.has(name)?"Vetoed":"Choose this",onClick:()=>{events(S.actor,me.name,name,"chosen");}}),
+    el("button",{class:"btn stop",type:"button",disabled:vetoed,text:"Veto",onClick:()=>{S.vetoes.add(name);events(S.actor,me.name,name,"vetoed");paintDrawer();render();}})
+  ]));
+}
+
+/* ── people ────────────────────────────────── */
+function people(){
+  const costs=resc().map(r=>r.destination.est_cost);
+  const lo=Math.min(...costs),hi=Math.max(...costs);
+  return el("div",{class:"grid"},members().map(m=>{
+    const over=costs.filter(c=>m.budget_max&&c>m.budget_max).length;
+    return el("div",{class:"card pcard"},[
+      el("div",{class:"top"},[
+        av(m.id,"lg"),
+        el("div",{},[el("div",{class:"nm",text:m.name}),el("div",{class:"sub",text:`$${m.budget_max} budget`})])
+      ]),
+      el("div",{class:"sub",style:"display:flex;justify-content:space-between;font-size:11px;font-weight:650"},[
+        el("span",{text:`$${Math.round(lo)}`}),el("span",{text:`$${Math.round(hi)}`})
+      ]),
+      el("div",{class:"meter"+(over?" over":"")},[el("i",{style:`width:${Math.round(100*(1-over/Math.max(costs.length,1)))}%`})]),
+      el("div",{class:"sub",style:"font-size:11.5px;font-weight:650;color:"+(over?"var(--salmon-ink)":"var(--green-ink)"),text:over?`${over} over budget`:"All within budget"}),
+      el("h3",{class:"sec",text:"Wants"}),el("div",{class:"chipset"},[
+        ...(m.climates||[]).map(c=>el("span",{class:"chip ghost",text:c})),
+        ...(m.activities||[]).map(a=>el("span",{class:"chip",style:"background:var(--green-soft);color:var(--green-ink)",text:a}))
+      ]),
+      el("h3",{class:"sec",text:"Limits"}),
+      el("div",{class:"chipset"},(m.conditions||[]).map(c=>{
+        const rel=S.relaxed.has(c.id);
+        return el("span",{class:"tag"+(c.status==="fixed"&&!rel?" fixed":""),text:(rel?"✓ ":"")+c.text});
+      }))
+    ]);
+  }));
+}
+
+/* ── record ────────────────────────────────── */
+function log(){
+  if(!S.log.length)return el("div",{class:"card"},[el("div",{class:"empty"},[
+    el("span",{class:"mark",text:"≡"}),
+    el("p",{style:"font-weight:700;margin:0 0 4px",text:"Nothing recorded yet"}),
+      el("p",{class:"sub",style:"margin:0",text:"Votes, vetoes and resolutions land here."}),
+      el("button",{class:"btn sm",type:"button",style:"margin-top:14px",text:"Run a sample session",onClick:demo})
+  ])]);
+  const t=el("div",{class:"tl"});
+  for(const e of S.log){
+    const res=e.kind==="condition changed"||e.kind==="plan changed";
+    t.append(el("div",{class:"ev"+(res?" bg":"")},[
+      av(e.actor), el("span",{style:"font-size:12.5px;font-weight:650",text:`${e.name} ${e.kind}`}),
+      el("span",{class:"chip ghost",text:e.dest}),
+      el("span",{class:"t n",text:e.t})
+    ]));
+  }
+  return el("div",{class:"card",style:"padding:18px"},[t]);
+}
+function demo(){
+  const seq=[
+    [1,"vetoed","Cancun"],[2,"approved","Marrakesh"],[3,"condition changed","Bali"],
+    [4,"rated no","Tokyo"],[1,"plan changed","Lisbon"],[2,"chosen","Lisbon"]
+  ];
+  const now=Date.now();
+  seq.forEach((x,i)=>S.log.push({t:new Date(now-i*84000).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}),actor:x[0],name:N(x[0]),dest:x[2],kind:x[1]}));
+  render();
+}
+
+/* ── shell ─────────────────────────────────── */
+function toolbar(){
+  const v=V();
+  return el("div",{class:"toolbar"},[
+    el("div",{},[
+      el("h1",{class:"h1",text:"Where should we go?"}),
+      el("div",{class:"sub",text:`Toronto · 3 days · ${members().length} travellers`})
+    ]),
+    el("div",{class:"legend"},[
+      el("span",{},[el("i",{style:"background:var(--green)"}),"fits"]),
+      el("span",{},[el("i",{style:"background:var(--amber)"}),"compromise"]),
+      el("span",{},[el("i",{style:"background:var(--salmon)"}),V()?"conflict":"weak fit"])
+    ]),
+    el("select",{id:"states","aria-label":"Preview a state",style:"margin-left:auto"},
+      ["ready","loading","empty","error"].map(s=>el("option",{value:s,selected:s===S.state?"":null,text:{ready:"Live",loading:"Loading",empty:"No members",error:"Error"}[s]})))
+  ]);
+}
+
+function render(){
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===S.tab?"page":"false"));
+  document.querySelectorAll("#view button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.view===S.view?"true":"false"));
+  const who=$("#who"); who.innerHTML="";
+  members().forEach(m=>who.append(av(m.id)));
+  $("#strategy").value=S.strategy; $("#actor").value=String(S.actor);
+
+  const m=$("#main"); m.innerHTML="";
+  if(S.tab==="compare"){ m.append(toolbar()); m.append(board()); }
+  if(S.tab==="people"){ m.append(people()); }
+  if(S.tab==="log"){ m.append(log()); }
+  if(S.open) paintDrawer();
+}
+
+function boot(){
+  const sel=$("#strategy");
+  for(const [k,v] of Object.entries(DATA.strategies))sel.append(el("option",{value:k,text:v.label}));
+  const act=$("#actor");
+  for(const mm of members())act.append(el("option",{value:mm.id,text:mm.name}));
+
+  document.querySelectorAll("#tabs button").forEach(b=>b.addEventListener("click",()=>{S.tab=b.dataset.tab;render();}));
+  document.querySelectorAll("#view button").forEach(b=>b.addEventListener("click",()=>{S.view=b.dataset.view;S.preview=false;render();}));
+  sel.addEventListener("change",()=>{S.strategy=sel.value;render();});
+  act.addEventListener("change",()=>{S.actor=Number(act.value);render();});
+  $("#veil").addEventListener("click",closeDrawer);
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&S.open)closeDrawer();});
+  document.addEventListener("change",e=>{if(e.target&&e.target.id==="states"){S.state=e.target.value;render();}});
+  document.addEventListener("click",e=>{
+    const btn=e.target.closest("button[data-tab]"); if(btn){return;}
+  });
+  render();
+}
+boot();
+</script>
+</body>
+</html>
