@@ -5,13 +5,14 @@ from sqlmodel import Session, select
 from app.db import get_session
 from app.engine.scheduler import build_schedule
 from app.enums import ConditionStatus
-from app.models import Activity, Condition, Member, PlanItem, Rating, Trip
+from app.models import Activity, Condition, Member, PlanItem, ProfileField, Rating, Trip
 from app.schemas import (
     ChangePreview,
     ChangePreviewRequest,
     PlanItemRead,
     PlanItemUpdate,
     PlanRead,
+    UnscheduledRead,
 )
 
 router = APIRouter(tags=["plan"])
@@ -28,67 +29,161 @@ def _plan_items(session: Session, trip_id: int) -> list[PlanItem]:
     return list(session.exec(select(PlanItem).where(PlanItem.trip_id == trip_id)).all())
 
 
-@router.post("/trips/{trip_id}/plan/generate", response_model=PlanRead)
-def generate_plan(trip_id: int, session: Session = Depends(get_session)) -> PlanRead:
-    trip = _trip_or_404(session, trip_id)
+def _activities_for(session: Session, trip: Trip) -> list[Activity]:
     if trip.selected_destination_id is None:
         raise HTTPException(status_code=400, detail="select a destination first")
-
-    activities = list(
+    return list(
         session.exec(
             select(Activity).where(Activity.destination_id == trip.selected_destination_id)
         ).all()
     )
 
-    existing = _plan_items(session, trip_id)
-    pinned = [(i.activity_id, i.day_index, i.start_minute) for i in existing if i.locked]
 
-    # Anything a member has said they are not interested in is left out of the schedule.
+def _rejected_activity_ids(
+    session: Session, trip_id: int, existing: list[PlanItem]
+) -> set[int]:
+    """Activities the group has turned down, either by vote or by removing them."""
+    rejected = {item.activity_id for item in existing if item.status == "rejected"}
     member_ids = [
         m.id for m in session.exec(select(Member).where(Member.trip_id == trip_id)).all()
     ]
-    rejected: set[int] = set()
     if member_ids:
-        for rating in session.exec(select(Rating).where(Rating.member_id.in_(member_ids))).all():
+        for rating in session.exec(
+            select(Rating).where(Rating.member_id.in_(member_ids))
+        ).all():
             if rating.activity_id is not None and rating.value == "not_interested":
                 rejected.add(rating.activity_id)
+    return rejected
 
-    # Locked rows survive a rebuild; everything else is repacked around them.
+
+def _per_day_budget(session: Session, trip: Trip) -> float | None:
+    """What each day may spend on paid activities.
+
+    Taken from the strictest member budget and shared evenly across the days, so the
+    person with the least money sets the pace for the whole plan.
+    """
+    member_ids = [
+        m.id for m in session.exec(select(Member).where(Member.trip_id == trip.id)).all()
+    ]
+    if not member_ids:
+        return None
+    budgets = [
+        float(field.value)
+        for field in session.exec(
+            select(ProfileField)
+            .where(ProfileField.member_id.in_(member_ids))
+            .where(ProfileField.field == "budget_max")
+        ).all()
+        if isinstance(field.value, (int, float))
+    ]
+    if not budgets:
+        return None
+    return round(min(budgets) / max(trip.days, 1), 2)
+
+
+def _plan_read(session: Session, trip_id: int, result=None, budget=None) -> PlanRead:
+    return PlanRead(
+        items=[PlanItemRead.model_validate(i) for i in _plan_items(session, trip_id)],
+        unscheduled=[
+            UnscheduledRead(activity_id=item.activity_id, reason=item.reason)
+            for item in (result.unscheduled if result else [])
+        ],
+        per_day_budget=budget,
+        day_spend=list(result.day_spend) if result else [],
+    )
+
+
+@router.post("/trips/{trip_id}/plan/generate", response_model=PlanRead)
+def generate_plan(trip_id: int, session: Session = Depends(get_session)) -> PlanRead:
+    """Rebuild the timetable from scratch, keeping pinned rows where they are."""
+    trip = _trip_or_404(session, trip_id)
+    activities = _activities_for(session, trip)
+
+    existing = _plan_items(session, trip_id)
+    rejected = _rejected_activity_ids(session, trip_id, existing)
+
+    # A rejection outranks a pin: if someone has turned it down, it leaves the plan.
+    pinned = [
+        (item.activity_id, item.day_index, item.start_minute)
+        for item in existing
+        if item.locked and item.activity_id not in rejected
+    ]
+    pinned_ids = {activity_id for activity_id, _, _ in pinned}
+    budget = _per_day_budget(session, trip)
+
     for item in existing:
-        if not item.locked:
+        if not item.locked or item.activity_id in rejected:
             session.delete(item)
     session.commit()
 
-    result = build_schedule(activities, trip.days, locked=pinned, excluded=rejected)
-    kept = [i for i in _plan_items(session, trip_id) if i.locked]
-
-    created: list[PlanItem] = list(kept)
-    for si in result.items:
-        item = PlanItem(
-            trip_id=trip_id,
-            activity_id=si.activity_id,
-            day_index=si.day_index,
-            start_minute=si.start_minute,
-        )
-        session.add(item)
-        created.append(item)
-    session.commit()
-    for item in created:
-        session.refresh(item)
-
-    return PlanRead(
-        items=[PlanItemRead.model_validate(i) for i in created],
-        unscheduled_activity_ids=result.unscheduled_activity_ids,
+    result = build_schedule(
+        activities, trip.days, per_day_budget=budget, fixed=pinned, excluded=rejected
     )
+
+    for placement in result.items:
+        if placement.activity_id in pinned_ids:
+            continue
+        session.add(
+            PlanItem(
+                trip_id=trip_id,
+                activity_id=placement.activity_id,
+                day_index=placement.day_index,
+                start_minute=placement.start_minute,
+            )
+        )
+    session.commit()
+
+    return _plan_read(session, trip_id, result, budget)
+
+
+@router.post("/trips/{trip_id}/plan/replan", response_model=PlanRead)
+def replan(trip_id: int, session: Session = Depends(get_session)) -> PlanRead:
+    """Fill the free time without moving anything already on the timetable."""
+    trip = _trip_or_404(session, trip_id)
+    activities = _activities_for(session, trip)
+
+    existing = _plan_items(session, trip_id)
+    rejected = _rejected_activity_ids(session, trip_id, existing)
+
+    # Anything the group has turned down leaves the timetable, so the gap can be filled.
+    for item in existing:
+        if item.activity_id in rejected:
+            session.delete(item)
+    session.commit()
+
+    existing = _plan_items(session, trip_id)
+    fixed = [
+        (item.activity_id, item.day_index, item.start_minute)
+        for item in existing
+        if item.status != "rejected" and item.activity_id not in rejected
+    ]
+    budget = _per_day_budget(session, trip)
+
+    result = build_schedule(
+        activities, trip.days, per_day_budget=budget, fixed=fixed, excluded=rejected
+    )
+
+    already = {item.activity_id for item in existing}
+    for placement in result.items:
+        if placement.activity_id in already:
+            continue
+        session.add(
+            PlanItem(
+                trip_id=trip_id,
+                activity_id=placement.activity_id,
+                day_index=placement.day_index,
+                start_minute=placement.start_minute,
+            )
+        )
+    session.commit()
+
+    return _plan_read(session, trip_id, result, budget)
 
 
 @router.get("/trips/{trip_id}/plan", response_model=PlanRead)
 def get_plan(trip_id: int, session: Session = Depends(get_session)) -> PlanRead:
     _trip_or_404(session, trip_id)
-    return PlanRead(
-        items=[PlanItemRead.model_validate(i) for i in _plan_items(session, trip_id)],
-        unscheduled_activity_ids=[],
-    )
+    return _plan_read(session, trip_id)
 
 
 @router.delete("/trips/{trip_id}/plan", status_code=204)

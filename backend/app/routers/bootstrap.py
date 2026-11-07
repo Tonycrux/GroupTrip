@@ -91,10 +91,7 @@ def bootstrap(trip_id: int, session: Session = Depends(get_session)) -> Bootstra
         vetoes=vetoes,
         conflicts=conflicts,
         revisions=revisions,
-        plan=PlanRead(
-            items=[PlanItemRead.model_validate(i) for i in items],
-            unscheduled_activity_ids=[],
-        ),
+        plan=PlanRead(items=[PlanItemRead.model_validate(i) for i in items]),
         ratings=ratings,
         requests=requests,
     )

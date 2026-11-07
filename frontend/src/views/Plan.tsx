@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../api/client";
 import { useApp } from "../state/AppState";
 import { useDialog } from "../components/DialogProvider";
-import type { ActivityScore, ChangePreview, PlanItem, RatingValue } from "../types";
+import type { ActivityScore, ChangePreview, Plan, PlanItem, RatingValue } from "../types";
 import { Banner, Empty, Skeleton, bandColor, initials } from "../components/ui";
 
 const time = (m: number | null) => {
@@ -19,7 +19,6 @@ export default function Plan() {
     actorId,
     tripId,
     conflict,
-    generatePlan,
     toggleLock,
     rateActivity,
     requestAlternative,
@@ -31,6 +30,7 @@ export default function Plan() {
   const [scores, setScores] = useState<ActivityScore[]>([]);
   const [actLoading, setActLoading] = useState(false);
   const [preview, setPreview] = useState<{ item: PlanItem; info: ChangePreview } | null>(null);
+  const [planInfo, setPlanInfo] = useState<Plan | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const destId = bundle?.trip.selected_destination_id ?? null;
@@ -55,6 +55,11 @@ export default function Plan() {
   useEffect(() => {
     void loadScores();
   }, [loadScores]);
+
+  // A new destination means a new timetable, so the last report no longer applies.
+  useEffect(() => {
+    setPlanInfo(null);
+  }, [destId]);
 
   const byId = useMemo(
     () => new Map(scores.map((s) => [s.activity.id, s.activity])),
@@ -86,7 +91,13 @@ export default function Plan() {
 
   const items = bundle.plan.items;
   const days = Math.max(bundle.trip.days, 1);
-  const unscheduled = new Set(bundle.plan.unscheduled_activity_ids);
+  const unscheduledReasons = new Map(
+    (planInfo?.unscheduled ?? []).map((entry) => [entry.activity_id, entry.reason]),
+  );
+  const unscheduledSummary = (planInfo?.unscheduled ?? [])
+    .slice(0, 3)
+    .map((entry) => `${byId.get(entry.activity_id)?.name ?? `#${entry.activity_id}`} — ${entry.reason}`)
+    .join("; ");
 
   // Rows whose activity isn't at the current destination are leftovers from an older
   // plan. Never render them as bare numbers; say so instead.
@@ -155,6 +166,26 @@ export default function Plan() {
     }
   };
 
+  const runGenerate = async () => {
+    if (tripId == null) return;
+    try {
+      setPlanInfo(await api.generatePlan(tripId));
+      await reload();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not build the plan");
+    }
+  };
+
+  const runReplan = async () => {
+    if (tripId == null) return;
+    try {
+      setPlanInfo(await api.replan(tripId));
+      await reload();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not fill the gaps");
+    }
+  };
+
   return (
     <>
       <div className="toolbar">
@@ -172,17 +203,33 @@ export default function Plan() {
           >
             Change destination
           </button>
-          <button type="button" className="btn go" onClick={() => void generatePlan()}>
+          <button
+            type="button"
+            className="btn"
+            disabled={items.length === 0 || actLoading}
+            title="Fill empty time without moving anything already placed"
+            onClick={() => void runReplan()}
+          >
+            Fill gaps
+          </button>
+          <button type="button" className="btn go" onClick={() => void runGenerate()}>
             {items.length ? "Rebuild plan" : "Build plan"}
           </button>
         </div>
       </div>
 
-      {(error || unscheduled.size > 0) && (
+      {(error || (planInfo?.unscheduled.length ?? 0) > 0) && (
         <Banner
           tone={error ? "bad" : "info"}
-          title={error ? "Something failed." : "Some activities didn't fit."}
-          note={error ?? `${unscheduled.size} left out of the timetable.`}
+          title={error ? "Something failed." : "Some activities could not be placed."}
+          note={
+            error ??
+            `${unscheduledSummary}${
+              (planInfo?.unscheduled.length ?? 0) > 3
+                ? ` and ${(planInfo?.unscheduled.length ?? 0) - 3} more`
+                : ""
+            }`
+          }
         />
       )}
 
@@ -237,7 +284,15 @@ export default function Plan() {
                 .sort((a, b) => (a.start_minute ?? 0) - (b.start_minute ?? 0));
               return (
                 <div key={day} className="dayblock">
-                  <div className="dayhead">Day {day + 1}</div>
+                  <div className="dayhead">
+                    <span>Day {day + 1}</span>
+                    {planInfo?.per_day_budget != null && (
+                      <span className="dayhead-spend">
+                        ${Math.round(planInfo.day_spend[day] ?? 0)} of $
+                        {Math.round(planInfo.per_day_budget)}
+                      </span>
+                    )}
+                  </div>
                   {dayItems.length === 0 ? (
                     <p className="hint">Nothing scheduled.</p>
                   ) : (
@@ -330,7 +385,22 @@ export default function Plan() {
                       <span className="n">{a.duration_hours}h</span>
                       <span>·</span>
                       <span className="n">{a.travel_time_min}m</span>
-                      {unscheduled.has(a.id) && <span className="chip chip-mid">didn't fit</span>}
+                      {unscheduledReasons.has(a.id) && (
+                        <span
+                          className="chip chip-mid"
+                          title={unscheduledReasons.get(a.id)}
+                        >
+                          not placed
+                        </span>
+                      )}
+                      {conflict && row.conflicts.length > 0 && (
+                        <span
+                          className="chip chip-bad"
+                          title={row.conflicts.map((c) => c.summary).join("\n")}
+                        >
+                          {row.conflicts[0].kind.replace(/_/g, " ")}
+                        </span>
+                      )}
                       {row.rejected_by.length > 0 && (
                         <span
                           className="chip chip-bad"

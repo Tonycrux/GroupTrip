@@ -400,9 +400,16 @@ class PlanItemRead(BaseModel):
     status: str
 
 
+class UnscheduledRead(BaseModel):
+    activity_id: int
+    reason: str
+
+
 class PlanRead(BaseModel):
     items: list[PlanItemRead]
-    unscheduled_activity_ids: list[int]
+    unscheduled: list[UnscheduledRead] = []
+    per_day_budget: Optional[float] = None
+    day_spend: list[float] = []
 
 
 class RevisionCreate(BaseModel):
@@ -451,6 +458,7 @@ class ActivityScoreRead(BaseModel):
     member_scores: list[MemberScore]
     group_score: float
     rejected_by: list[int] = []
+    conflicts: list[Conflict] = []
 
 
 class BootstrapRead(BaseModel):

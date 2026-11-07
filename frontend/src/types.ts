@@ -126,6 +126,7 @@ export interface ActivityScore {
   member_scores: MemberScore[];
   group_score: number;
   rejected_by: number[];
+  conflicts: Conflict[];
 }
 
 export interface Rating {
@@ -172,9 +173,16 @@ export interface PlanItem {
   status: string;
 }
 
+export interface Unscheduled {
+  activity_id: number;
+  reason: string;
+}
+
 export interface Plan {
   items: PlanItem[];
-  unscheduled_activity_ids: number[];
+  unscheduled: Unscheduled[];
+  per_day_budget: number | null;
+  day_spend: number[];
 }
 
 export interface ActivityRequest {

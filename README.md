@@ -305,11 +305,3 @@ Endpoints marked ✱ require the `X-Member-Id` header (the acting member).
 A `TaskInstance` ties a session, a scenario and an interface **variant** together; the `Trip`
 for a run links back to it via `Trip.task_instance_id`. Opening the app with `?task=<id>` puts it
 in study mode: the UI locks to that task's variant and posts an event for each meaningful action.
-
-## Next steps
-
-- Replace `create_all` with migrations (Alembic) now that the schema is frozen.
-- Expand the activity scheduler (per-day budgets, opening-hour constraints, re-planning).
-- Give the activity stage its own per-member scoring, so activities surface conflicts too.
-- Add end-to-end tests that drive the UI, not just the API.
-- Run the user study, then the analysis and report.

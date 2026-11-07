@@ -52,7 +52,7 @@ def test_a_rejected_activity_is_left_out_of_the_plan(client):
     rebuilt = client.post(f"/trips/{trip_id}/plan/generate").json()
 
     assert rebuilt["items"] == []
-    assert rebuilt["unscheduled_activity_ids"] == []
+    assert rebuilt["unscheduled"] == []
 
 
 def test_bootstrap_lists_suggestions(client):
@@ -67,3 +67,49 @@ def test_bootstrap_lists_suggestions(client):
     assert len(data["requests"]) == 1
     assert data["requests"][0]["text"] == "something outdoors"
     assert data["requests"][0]["activity_id"] == 1
+
+
+def two_members(client):
+    trip = client.post("/trips", json={"name": "Two", "days": 2}).json()
+    trip_id = trip["id"]
+    ada = client.post(f"/trips/{trip_id}/members", json={"name": "Ada"}).json()
+    ben = client.post(f"/trips/{trip_id}/members", json={"name": "Ben"}).json()
+    client.patch(f"/trips/{trip_id}", json={"selected_destination_id": 1})
+    return trip_id, ada["id"], ben["id"]
+
+
+def test_like_and_dislike_produce_an_activity_conflict(client):
+    trip_id, ada, ben = two_members(client)
+    client.put(f"/members/{ada}/profile", json={"likes": ["beach"]})
+    client.put(f"/members/{ben}/profile", json={"dislikes": ["beach"]})
+
+    row = client.get(f"/trips/{trip_id}/activities").json()[0]
+
+    kinds = [c["kind"] for c in row["conflicts"]]
+    assert "activity" in kinds
+    conflict = next(c for c in row["conflicts"] if c["kind"] == "activity")
+    assert sorted(conflict["member_ids"]) == sorted([ada, ben])
+
+
+def test_fixed_condition_shows_up_as_an_activity_conflict(client):
+    trip_id, ada, ben = two_members(client)
+    client.post(
+        f"/trips/{trip_id}/conditions",
+        json={"member_id": ben, "text": "No beach days", "type": "activity", "status": "fixed"},
+    )
+
+    row = client.get(f"/trips/{trip_id}/activities").json()[0]
+
+    kinds = [c["kind"] for c in row["conflicts"]]
+    assert "fixed_condition" in kinds
+    assert next(c for c in row["conflicts"] if c["kind"] == "fixed_condition")["member_ids"] == [ben]
+
+
+def test_agreeing_members_have_no_activity_conflict(client):
+    trip_id, ada, ben = two_members(client)
+    client.put(f"/members/{ada}/profile", json={"activities": ["beach"]})
+    client.put(f"/members/{ben}/profile", json={"activities": ["beach"]})
+
+    row = client.get(f"/trips/{trip_id}/activities").json()[0]
+
+    assert row["conflicts"] == []

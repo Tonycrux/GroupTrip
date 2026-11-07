@@ -66,3 +66,35 @@ def test_moving_an_item_to_another_day(client):
 
     reread = client.get(f"/trips/{trip_id}/plan").json()["items"]
     assert reread[0]["day_index"] == 1
+
+
+def test_replan_leaves_existing_rows_alone(client):
+    trip_id = setup(client)
+    item = client.post(f"/trips/{trip_id}/plan/generate").json()["items"][0]
+    client.patch(f"/plan-items/{item['id']}", json={"day_index": 1, "start_minute": 600})
+
+    replanned = client.post(f"/trips/{trip_id}/plan/replan")
+    assert replanned.status_code == 200
+
+    kept = [i for i in replanned.json()["items"] if i["id"] == item["id"]]
+    assert kept, "replan dropped an existing row"
+    assert kept[0]["day_index"] == 1
+    assert kept[0]["start_minute"] == 600
+
+
+def test_plan_without_budgets_has_no_daily_cap(client):
+    trip_id = setup(client)
+    data = client.post(f"/trips/{trip_id}/plan/generate").json()
+    assert data["per_day_budget"] is None
+    assert data["day_spend"] == [0.0, 0.0]
+
+
+def test_daily_budget_comes_from_the_strictest_member(client):
+    trip_id = setup(client)
+    member = client.get(f"/trips/{trip_id}/members").json()[0]
+    client.put(f"/members/{member['id']}/profile", json={"budget_max": 900})
+
+    data = client.post(f"/trips/{trip_id}/plan/generate").json()
+
+    # 900 shared across the fixture's 2 days
+    assert data["per_day_budget"] == 450.0

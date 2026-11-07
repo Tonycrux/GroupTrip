@@ -147,6 +147,8 @@ export const api = {
     request<void>(`/trips/${tripId}/plan`, { method: "DELETE" }),
   generatePlan: (tripId: number) =>
     request<Plan>(`/trips/${tripId}/plan/generate`, { method: "POST" }),
+  replan: (tripId: number) =>
+    request<Plan>(`/trips/${tripId}/plan/replan`, { method: "POST" }),
   updatePlanItem: (itemId: number, body: Partial<PlanItem>) =>
     request<PlanItem>(`/plan-items/${itemId}`, patch(body)),
 

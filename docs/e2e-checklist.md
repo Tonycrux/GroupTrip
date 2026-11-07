@@ -265,8 +265,18 @@ activity shows a start time, a name, its cost, how long it takes, and how long i
 get there. Below the timetable is a list of every activity available at that destination
 (there should be 12).
 
-If some activities could not be fitted into the days, a small banner at the top tells you how
-many were left out.
+If some activities could not be fitted in, a banner at the top names them and says why. There
+are three kinds of reason: its opening hours never overlap the day, it does not fit what is
+left of the day's budget, or there is no free slot long enough. Those same activities are
+marked **not placed** in the list below; hover the label to read the reason.
+
+**Each day has a spending cap.** When your travellers have budgets, the day heading shows
+something like "Day 2 · $45 of $267". The cap is the strictest member budget divided evenly
+across the days, so the person with the least money sets the pace.
+
+**Build plan** and **Fill gaps** are different. Building throws the timetable away and packs it
+again, keeping locked rows where they are. **Fill gaps** leaves everything already on the
+timetable exactly where it is and only puts activities into the empty time.
 
 A timetable belongs to one destination. If you change the destination, the timetable is thrown
 away and you will see "No plan yet" until you build it again. That is deliberate: a schedule
@@ -334,7 +344,12 @@ different day.
 scheduled there. Its start time is set for you.
 
 **Now vote on an activity.** In the list below the timetable, every activity shows a score for
-each person (in the Conflict-aware version) and three buttons: **In**, **Out** and **Alt**.
+each person and, when they disagree, a red label naming the kind of disagreement. The label can
+say **activity** (one person likes this kind of thing and another avoids it), **disagreement**
+(their scores are far apart) or **fixed condition** (someone's fixed limit mentions it). Hover
+it to read the sentence.
+
+Each activity also has three buttons: **In**, **Out** and **Alt**.
 
 - **In** records that you want it. Your score goes up.
 - **Out** records that you don't. Your score goes down, the row is marked "left out", and the

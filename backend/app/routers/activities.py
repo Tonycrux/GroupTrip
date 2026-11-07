@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session, select
 
 from app.db import get_session
-from app.engine.activity_scoring import score_activity
+from app.engine.activity_scoring import detect_activity_conflicts, score_activity
 from app.engine.scoring import MemberProfile, profile_from_fields
-from app.models import Activity, Destination, Member, ProfileField, Rating, Trip
-from app.schemas import ActivityRead, ActivityScoreRead, MemberScore
+from app.models import Activity, Condition, Destination, Member, ProfileField, Rating, Trip
+from app.schemas import ActivityRead, ActivityScoreRead, Conflict, MemberScore
 
 router = APIRouter(tags=["activities"])
 
@@ -67,6 +67,14 @@ def trip_activities(
             if rating.activity_id is not None:
                 ratings[(rating.member_id, rating.activity_id)] = rating
 
+    conditions_by_member: dict[int, list[Condition]] = {}
+    for condition in session.exec(
+        select(Condition).where(Condition.trip_id == trip_id)
+    ).all():
+        conditions_by_member.setdefault(condition.member_id, []).append(condition)
+
+    names = {m.id: m.name for m in members}
+
     results: list[ActivityScoreRead] = []
     for act in activities:
         scored = [
@@ -82,6 +90,9 @@ def trip_activities(
             if ratings.get((s.member_id, act.id)) is not None
             and ratings[(s.member_id, act.id)].value == "not_interested"
         ]
+        conflicts = detect_activity_conflicts(
+            scored, act, profiles, conditions_by_member, names
+        )
         results.append(
             ActivityScoreRead(
                 activity=ActivityRead.model_validate(act),
@@ -97,6 +108,15 @@ def trip_activities(
                 ],
                 group_score=group,
                 rejected_by=rejected_by,
+                conflicts=[
+                    Conflict(
+                        kind=c.kind,
+                        member_ids=c.member_ids,
+                        summary=c.summary,
+                        severity=c.severity,
+                    )
+                    for c in conflicts
+                ],
             )
         )
 
