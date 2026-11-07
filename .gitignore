@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pdm-python
+.pytest_cache/
+backend/grouptrip.db
+backend/.env
+
+# Dataset builder cache / scratch output
+backend/scripts/cache/
+backend/scripts/out/
+
+# Node
+node_modules/
+dist/
+*.local
+
+# Editors / OS
+.DS_Store
+.idea/

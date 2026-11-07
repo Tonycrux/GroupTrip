@@ -1,0 +1,1011 @@
+[
+  {
+    "id": 1,
+    "name": "Lisbon",
+    "region": "Lisbon District",
+    "country": "Portugal",
+    "climate": "mild",
+    "dest_type": "coastal city",
+    "est_cost": 564.0,
+    "travel_time_hours": 8.2,
+    "activities": [
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Lisbon (Portuguese: Lisboa) is the capital of Portugal situated on seven hills at the wide mouth of the river Tagus (Tejo) where it meets the Atlantic Ocean. With 545,000 residents in the city and 3.0 million in the Lisbon Region (2024) and a thriving mix of Portugal's rich history and vivid contemp",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg/1280px-Lisboa_-_Portugal_%2852597836992%29.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Barcelona",
+    "region": "Catalonia",
+    "country": "Spain",
+    "climate": "mild",
+    "dest_type": "coastal city",
+    "est_cost": 603.0,
+    "travel_time_hours": 9.0,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Barcelona is Spain's second largest city, with a population of nearly two million people, and the capital of Catalonia. A major port on the northeastern Mediterranean coast of Spain, Barcelona has a wide variety of attractions that bring in tourists from around the globe.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Evening_light_over_Barcelona.jpg/1280px-Evening_light_over_Barcelona.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Rome",
+    "region": "Lazio",
+    "country": "Italy",
+    "climate": "temperate",
+    "dest_type": "cultural",
+    "est_cost": 696.0,
+    "travel_time_hours": 9.9,
+    "activities": [
+      "adventure",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Rome (Italian and Latin: Roma), the 'Eternal City', is the capital and largest city of Italy and of the Lazio region. It's the famed city of the Roman Empire, the Seven Hills, La Dolce Vita, the Vatican City and Three Coins in the Fountain.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg/1280px-Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Paris",
+    "region": "Île-de-France Region",
+    "country": "France",
+    "climate": "mild",
+    "dest_type": "cultural",
+    "est_cost": 894.0,
+    "travel_time_hours": 8.5,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "thumb|300px|The Eiffel Tower and the Seine River Paris, the cosmopolitan capital of France, has the reputation of being the most beautiful and romantic of all cities, brimming with historic associations and remaining vastly influential in the realms of culture, art, fashion, food and design. Dubbed ",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/1280px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Amsterdam",
+    "region": "North Holland",
+    "country": "Netherlands",
+    "climate": "mild",
+    "dest_type": "cultural",
+    "est_cost": 711.0,
+    "travel_time_hours": 8.5,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Amsterdam is the capital of the Netherlands. It is known for the canals that cross the city, its impressive architecture, museums and art galleries, its notorious red light district, and more than 1,500 bridges.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/Amsterdam_Canals_%2823585867048%29.jpg/1280px-Amsterdam_Canals_%2823585867048%29.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Prague",
+    "region": "Prague",
+    "country": "Czechia",
+    "climate": "mild",
+    "dest_type": "cultural",
+    "est_cost": 420.0,
+    "travel_time_hours": 9.4,
+    "activities": [
+      "adventure",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Prague (Czech: Praha) is the capital and largest city of the Czech Republic. The city's historic buildings and narrow, winding streets are testament to its centuries-old role as capital of the historic region of Bohemia.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Prague_%286365119737%29.jpg/1280px-Prague_%286365119737%29.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Budapest",
+    "region": "Budapest",
+    "country": "Hungary",
+    "climate": "temperate",
+    "dest_type": "cultural",
+    "est_cost": 372.0,
+    "travel_time_hours": 9.9,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Budapest is the capital city of Hungary. With a unique, youthful atmosphere, world-class classical music scene, a pulsating nightlife increasingly appreciated among European youth, and last but not least, an exceptional offer of natural thermal baths, Budapest is one of Europe's most delightful and ",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/View_from_Gell%C3%A9rt_Hill_to_the_Danube%2C_Hungary_-_Budapest_%2828493220635%29.jpg/1280px-View_from_Gell%C3%A9rt_Hill_to_the_Danube%2C_Hungary_-_Budapest_%2828493220635%29.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Athens",
+    "region": "Attica",
+    "country": "Greece",
+    "climate": "warm",
+    "dest_type": "cultural",
+    "est_cost": 519.0,
+    "travel_time_hours": 11.1,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Athens (Greek: , Athína) is the capital city of Greece. It was the major cultural, political and religious centre of Classical Greece, a place that deeply influenced the course of Western civilization.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Athens_Acropolis_at_Daybreak.jpg/1280px-Athens_Acropolis_at_Daybreak.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Santorini",
+    "region": "South Aegean",
+    "country": "Greece",
+    "climate": "warm",
+    "dest_type": "island",
+    "est_cost": 843.0,
+    "travel_time_hours": 11.4,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping",
+      "wellness"
+    ],
+    "description": "Santorini is an archipelago of 5 volcanic islands in the Cyclades group of the Greek islands in the southern Aegean Sea, about 200 km southeast of mainland Greece. It used to be a single island, but was obliterated around 1600 BCE by an enormous volcanic explosion that destroyed the earliest settlem",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Oia_sunset_-_panoramio_%282%29.jpg/1280px-Oia_sunset_-_panoramio_%282%29.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Reykjavik",
+    "region": "Capital Region",
+    "country": "Iceland",
+    "climate": "cold",
+    "dest_type": "nature",
+    "est_cost": 921.0,
+    "travel_time_hours": 6.2,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife"
+    ],
+    "description": "Reykjavík is the capital of and largest city in Iceland and with an urban area population of around 233,000 (2019), it is the home to two-thirds of Iceland's population. It is the centre of culture and life of the Icelandic people, and is one of the focal points of tourism in Iceland.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg/1280px-Reykjav%C3%ADk%2C_view_from_Hallgr%C3%ADmskirkja_%282%29.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Oslo",
+    "region": "Oslo",
+    "country": "Norway",
+    "climate": "temperate",
+    "dest_type": "city",
+    "est_cost": 480.0,
+    "travel_time_hours": 8.4,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Oslo is Norway's capital and largest city, with 700,000 citizens in the city proper and about 1.5 million inhabitants in greater Oslo. It is in the East of the country in the Oslofjorden fjord, extending over an inlet of the Skagerrak strait.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Nationaltheatret_evening.jpg/1280px-Nationaltheatret_evening.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Dubrovnik",
+    "region": "Dubrovnik-Neretva County",
+    "country": "Croatia",
+    "climate": "temperate",
+    "dest_type": "coastal city",
+    "est_cost": 531.0,
+    "travel_time_hours": 10.2,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "thumb|300px|The Old Harbour at Dubrovnik Dubrovnik is a historic walled city on the Adriatic Sea coast in the extreme south of Croatia. It is one of the most prominent tourist destinations in the Mediterranean, a seaport and the centre of the Dubrovnik-Neretva County.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/67/The_walls_of_the_fortress_and_View_of_the_old_city._panorama.jpg/1280px-The_walls_of_the_fortress_and_View_of_the_old_city._panorama.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Split",
+    "region": "Split-Dalmatia County",
+    "country": "Croatia",
+    "climate": "temperate",
+    "dest_type": "coastal city",
+    "est_cost": 660.0,
+    "travel_time_hours": 10.0,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Split is a city in Central Dalmatia, Croatia, and the seat of the Split-Dalmatia county. The city was built around the Diocletian palace (a palace/fort built for the retired Roman emperor Diocletian) where the locals sought refuge centuries ago.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Split_080620-133710-IMG_0968x.jpg/1280px-Split_080620-133710-IMG_0968x.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Venice",
+    "region": "Veneto",
+    "country": "Italy",
+    "climate": "temperate",
+    "dest_type": "cultural",
+    "est_cost": 930.0,
+    "travel_time_hours": 9.6,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Venice (Italian: Venezia; Venetian: Venexia) is a sanctuary on a lagoon that is virtually the same as it was 600 years ago, which adds to the fascinating character. Venice has decayed since its heyday and suffers from overtourism, but the romantic charm remains.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Venezia_aerial_view.jpg/1280px-Venezia_aerial_view.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Berlin",
+    "region": "State of Berlin",
+    "country": "Germany",
+    "climate": "mild",
+    "dest_type": "city",
+    "est_cost": 591.0,
+    "travel_time_hours": 9.1,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Berlin is Germany's capital and largest city. Within the city limits, Berlin in 2022 had a population of 3.7 million.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Museumsinsel_Berlin_Juli_2021_1_%28cropped%29_b.jpg/1280px-Museumsinsel_Berlin_Juli_2021_1_%28cropped%29_b.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Vienna",
+    "region": "State of Vienna",
+    "country": "Austria",
+    "climate": "temperate",
+    "dest_type": "cultural",
+    "est_cost": 597.0,
+    "travel_time_hours": 9.6,
+    "activities": [
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Vienna (German: Wien; Austro-Bavarian: Wean) is the capital of Austria and by far its most populous city, with an urban population of 2 million and a metropolitan population of 2.9 million (2023). It is the country's artistic, cultural, economic and political centre.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Schoenbrunn_philharmoniker_2012.jpg/1280px-Schoenbrunn_philharmoniker_2012.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Copenhagen",
+    "region": "Capital Region",
+    "country": "Denmark",
+    "climate": "mild",
+    "dest_type": "city",
+    "est_cost": 795.0,
+    "travel_time_hours": 8.8,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Copenhagen (Danish: København) is the capital city of Denmark and forms the moderate conurbation that one million Danes call home. It is big enough to form a small Danish metropolis, with shopping, culture and nightlife par excellence, yet small enough still to feel intimate and be safe.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/2018_-_Christiansborg_from_the_Marble_Bridge.jpg/1280px-2018_-_Christiansborg_from_the_Marble_Bridge.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Edinburgh",
+    "region": "Scotland",
+    "country": "United Kingdom",
+    "climate": "mild",
+    "dest_type": "cultural",
+    "est_cost": 687.0,
+    "travel_time_hours": 7.7,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Edinburgh (Gaelic: Dùn Èideann) is the capital of Scotland, located in the Central Belt of the country. With a population of 526,470 in the urban area in 2021, and 901,455 in the metropolitans, Edinburgh fizzes with a cosmopolitan yet uniquely Scottish atmosphere.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Skyline_of_Edinburgh.jpg/1280px-Skyline_of_Edinburgh.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Porto",
+    "region": "Porto District",
+    "country": "Portugal",
+    "climate": "mild",
+    "dest_type": "coastal city",
+    "est_cost": 540.0,
+    "travel_time_hours": 8.0,
+    "activities": [
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Porto is Portugal's second largest city and the capital of the Northern region, and a busy industrial and commercial centre. The city isn't very populous (about 238,000 inhabitants in 2024), but the Porto metropolitan area has some 1.8 million inhabitants in a 50-km radius, with cities like Vila Nov",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_13.JPG/1280px-Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_13.JPG"
+  },
+  {
+    "id": 20,
+    "name": "Krakow",
+    "region": "Lesser Poland",
+    "country": "Poland",
+    "climate": "temperate",
+    "dest_type": "cultural",
+    "est_cost": 228.0,
+    "travel_time_hours": 9.8,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Kraków (IPA: [ˈkrakuf]) is the chief city of Małopolskie Province in the south of Poland and was the capital of the country during the Middle Ages. At its core is a beautifully-preserved medieval town on the banks of the River Wisła or Vistula, and it's Poland's top tourist draw.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/Krakow_Rynek_Glowny_panorama_2.jpg/1280px-Krakow_Rynek_Glowny_panorama_2.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Istanbul",
+    "region": "Istanbul",
+    "country": "Turkey",
+    "climate": "temperate",
+    "dest_type": "cultural",
+    "est_cost": 447.0,
+    "travel_time_hours": 11.2,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Istanbul (Turkish: İstanbul) is a very large city of fantastic history, culture and beauty. Called Byzantium in ancient times, the city's name was changed to Constantinople in 324 CE when it was rebuilt by the first Christian Roman Emperor, Constantine.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg/1280px-Historical_peninsula_and_modern_skyline_of_Istanbul.jpg"
+  },
+  {
+    "id": 22,
+    "name": "Marrakesh",
+    "region": "Marrakesh-Safi",
+    "country": "Morocco",
+    "climate": "arid",
+    "dest_type": "cultural",
+    "est_cost": 285.0,
+    "travel_time_hours": 8.8,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping",
+      "wellness"
+    ],
+    "description": "Marrakech (Arabic: مراكش, Berber: ⴰⵎⵓⵔⴰⴽⵓⵛ), also spelt Marrakesh, is one of the imperial cities of Morocco. Marrakech is the main tourist destination in Morocco.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg/1280px-Marrakech%2C_Morocco_%285421595453%29_%285%29.jpg"
+  },
+  {
+    "id": 23,
+    "name": "Cairo",
+    "region": "Cairo Governorate",
+    "country": "Egypt",
+    "climate": "arid",
+    "dest_type": "cultural",
+    "est_cost": 87.0,
+    "travel_time_hours": 12.5,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Cairo (pronounced KY-roh; Arabic: القاهرة al-Qāhirah) is the capital of Egypt (until the New Administrative Capital is completed) and, with a total population of Greater Cairo metropolitan area in excess of 16 million people, one of the largest cities in both Africa and the Middle East (the regions ",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Cairo_From_Tower_%28cropped%29.jpg/1280px-Cairo_From_Tower_%28cropped%29.jpg"
+  },
+  {
+    "id": 24,
+    "name": "Cape Town",
+    "region": "Western Cape",
+    "country": "South Africa",
+    "climate": "mild",
+    "dest_type": "coastal city",
+    "est_cost": 564.0,
+    "travel_time_hours": 17.4,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "thumb|400px|Cape Town and Table Mountain viewed from [[Bloubergstrand across Table Bay.]] Cape Town (Afrikaans: Kaapstad, Xhosa: iKapa) is the second most populous city in South Africa. The capital of Western Cape Province, it is also the legislative capital of the nation.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Camps_bay_%2853460319478%29_%28cropped%29.jpg/1280px-Camps_bay_%2853460319478%29_%28cropped%29.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Dubai",
+    "region": "Dubai",
+    "country": "United Arab Emirates",
+    "climate": "arid",
+    "dest_type": "city",
+    "est_cost": 867.0,
+    "travel_time_hours": 14.9,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Dubai (Arabic: دبي‎‎ Dubayy) is a cosmopolitan metropolis and global city on the Arabian Peninsula. The city is one of the ten most popular tourist destinations in the world.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Artificial_Archipelagos%2C_Dubai%2C_United_Arab_Emirates_ISS022-E-024940_lrg.jpg/1280px-Artificial_Archipelagos%2C_Dubai%2C_United_Arab_Emirates_ISS022-E-024940_lrg.jpg"
+  },
+  {
+    "id": 26,
+    "name": "Nairobi",
+    "region": "Nairobi County",
+    "country": "Kenya",
+    "climate": "mild",
+    "dest_type": "nature",
+    "est_cost": 201.0,
+    "travel_time_hours": 16.2,
+    "activities": [
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Nairobi is the political, as well as financial and media capital of Kenya. A city of 4.8 million inhabitants (as of 2024), it's the largest and fastest growing city in the country and one of Africa's largest cities.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Nairobi_skyline_from_Gem_Hotel.jpg/1280px-Nairobi_skyline_from_Gem_Hotel.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Tokyo",
+    "region": "Tokyo",
+    "country": "Japan",
+    "climate": "temperate",
+    "dest_type": "city",
+    "est_cost": 537.0,
+    "travel_time_hours": 13.9,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping",
+      "wellness"
+    ],
+    "description": "thumb|240px|The bulk of the Tokyo Metropolitan Government Building, [[Tokyo/Shinjuku|Shinjuku]] :Tokyo can be broadly divided into the \"23 special wards\", \"Tama region\" and \"Islands\". This article is about the 23 special wards of Tokyo, which corresponds to what many think of as the \"city of Tokyo\".",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1280px-Skyscrapers_of_Shinjuku_2009_January.jpg"
+  },
+  {
+    "id": 28,
+    "name": "Kyoto",
+    "region": "Kyoto",
+    "country": "Japan",
+    "climate": "temperate",
+    "dest_type": "cultural",
+    "est_cost": 333.0,
+    "travel_time_hours": 14.2,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping",
+      "wellness"
+    ],
+    "description": "thumb|320px|Kiyomizu-dera Temple with its famous large veranda Kyōto () was the capital of Japan for over a millennium, and carries a reputation as the nation's most beautiful city and its cultural capital - even the national government's Agency for Cultural Affairs moved there in 2023. However, vis",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Kiyomizu-dera%2C_Kyoto%2C_November_2016_-02.jpg/1280px-Kiyomizu-dera%2C_Kyoto%2C_November_2016_-02.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Bangkok",
+    "region": "Bangkok",
+    "country": "Thailand",
+    "climate": "tropical",
+    "dest_type": "city",
+    "est_cost": 297.0,
+    "travel_time_hours": 18.0,
+    "activities": [
+      "adventure",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping",
+      "wellness"
+    ],
+    "description": "Bangkok (Thai: กรุงเทพฯ Krung Thep) is the capital and largest city of Thailand. With a population of over eleven million inhabitants, Bangkok is by far Thailand's main city, with the urban sprawl comprising nearly half of Thailand's population, and the largest city on the Southeast Asian mainland.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/4Y1A1159_Bangkok_%2833536795515%29.jpg/1280px-4Y1A1159_Bangkok_%2833536795515%29.jpg"
+  },
+  {
+    "id": 30,
+    "name": "Chiang Mai",
+    "region": "Chiang Mai",
+    "country": "Thailand",
+    "climate": "tropical",
+    "dest_type": "cultural",
+    "est_cost": 171.0,
+    "travel_time_hours": 17.3,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Chiang Mai (เชียงใหม่) is the hub of northern Thailand. On a plain at an elevation of 316&nbsp;m, surrounded by mountains and lush countryside, it is much greener and quieter than the capital and has a cosmopolitan air and a significant expatriate population, all factors which have led many from Ban",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/0020-%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%AA%E0%B8%B4%E0%B8%87%E0%B8%AB%E0%B9%8C%E0%B8%A7%E0%B8%A3%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%A7%E0%B8%B4%E0%B8%AB%E0%B8%B2%E0%B8%A3.jpg/1280px-0020-%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%AA%E0%B8%B4%E0%B8%87%E0%B8%AB%E0%B9%8C%E0%B8%A7%E0%B8%A3%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%A7%E0%B8%B4%E0%B8%AB%E0%B8%B2%E0%B8%A3.jpg"
+  },
+  {
+    "id": 31,
+    "name": "Bali",
+    "region": "Bali",
+    "country": "Indonesia",
+    "climate": "tropical",
+    "dest_type": "island",
+    "est_cost": 234.0,
+    "travel_time_hours": 20.8,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "thumb|right|400px|Puri Saren Agung (Water Palace) in central Ubud Ubud, a town in central Bali of around 75,000 people (2020), is regarded as the cultural centre of Bali. It is famous as an arts and crafts hub, and much of the town and nearby villages seems to consist of artists' workshops and galle",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Odalan_preparation_inside_a_pura.jpg"
+  },
+  {
+    "id": 32,
+    "name": "Singapore",
+    "region": "",
+    "country": "Singapore",
+    "climate": "tropical",
+    "dest_type": "city",
+    "est_cost": 543.0,
+    "travel_time_hours": 19.8,
+    "activities": [
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping",
+      "wellness"
+    ],
+    "description": "Singapore (Chinese: 新加坡 Xīnjiāpō; Malay: Singapura; Tamil: சிங்கப்பூர் Chingappur) is a city-state in Southeast Asia. Modern Singapore was founded as a British trading colony in 1819, and since independence, it has become one of the world's most prosperous countries and boasts one of the world's bus",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Skylines_of_the_Central_Business_District%2C_Singapore_at_dusk.jpg/1280px-Skylines_of_the_Central_Business_District%2C_Singapore_at_dusk.jpg"
+  },
+  {
+    "id": 33,
+    "name": "Seoul",
+    "region": "Seoul",
+    "country": "South Korea",
+    "climate": "continental",
+    "dest_type": "city",
+    "est_cost": 405.0,
+    "travel_time_hours": 14.3,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Seoul (서울) is the capital of South Korea. With a population of over 9 million (with over 20 million in the wider metropolitan area), Seoul is by far South Korea's largest city and one of East Asia's financial and cultural centers.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/%EC%A4%91%ED%99%94%EC%A0%84%EC%9D%98_%EB%82%AE.jpg/1280px-%EC%A4%91%ED%99%94%EC%A0%84%EC%9D%98_%EB%82%AE.jpg"
+  },
+  {
+    "id": 34,
+    "name": "Hong Kong",
+    "region": "",
+    "country": "Hong Kong",
+    "climate": "warm",
+    "dest_type": "city",
+    "est_cost": 582.0,
+    "travel_time_hours": 16.7,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Hong Kong ( Hēunggóng in Cantonese) is a city with multiple personalities. The population is mainly Chinese, but British influence is still quite visible.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Hong_Kong_Island_Skyline_201108.jpg/1280px-Hong_Kong_Island_Skyline_201108.jpg"
+  },
+  {
+    "id": 35,
+    "name": "Hanoi",
+    "region": "Hanoi",
+    "country": "Vietnam",
+    "climate": "warm",
+    "dest_type": "cultural",
+    "est_cost": 174.0,
+    "travel_time_hours": 17.0,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping",
+      "wellness"
+    ],
+    "description": "Hanoi (Vietnamese: Hà Nội), the capital of Vietnam and its second-largest city, is a fascinating blend of East and West, with Chinese influence from centuries of dominance, and French je ne sais quoi from its colonial past. It was largely unspoiled by the modern architecture of the 1970s and 80s, an",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Hanoi_skyline_with_Ba_Vi_Mountain.jpg/1280px-Hanoi_skyline_with_Ba_Vi_Mountain.jpg"
+  },
+  {
+    "id": 36,
+    "name": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "country": "Malaysia",
+    "climate": "tropical",
+    "dest_type": "city",
+    "est_cost": 255.0,
+    "travel_time_hours": 19.5,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Kuala Lumpur, called KL by locals, is Malaysia's federal capital and largest city at 6.5 million (city-proper population of 1.8 million). Kuala Lumpur is a cultural melting pot with some of the world's cheapest 5-star hotels, impressive shopping districts, food from all parts of the world, and natur",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Bukit_Bintang_junction_in_2024_2.jpg/1280px-Bukit_Bintang_junction_in_2024_2.jpg"
+  },
+  {
+    "id": 37,
+    "name": "Male",
+    "region": "Kaafu Atoll",
+    "country": "Maldives",
+    "climate": "tropical",
+    "dest_type": "island",
+    "est_cost": 1050.0,
+    "travel_time_hours": 18.6,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Malé (މާލެ), pronounced Maa-leh, is the capital of Maldives. The city occupies the entire islet of Malé at the southern rim of North Malé Atoll.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Mal%C3%A9.jpg/1280px-Mal%C3%A9.jpg"
+  },
+  {
+    "id": 38,
+    "name": "Beijing",
+    "region": "Beijing Municipality",
+    "country": "China",
+    "climate": "continental",
+    "dest_type": "cultural",
+    "est_cost": 294.0,
+    "travel_time_hours": 14.2,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Beijing (北京 Běijīng) is China's capital and its second-largest city after Shanghai, with a population of around 22 million. With a rich history as the capital of Imperial China for much of its past, Beijing became the political and cultural heart of the People's Republic of China following the Chine",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Skyline_of_Beijing_CBD_with_B-5906_approaching_%2820211016171955%29_%281%29.jpg/1280px-Skyline_of_Beijing_CBD_with_B-5906_approaching_%2820211016171955%29_%281%29.jpg"
+  },
+  {
+    "id": 39,
+    "name": "Shanghai",
+    "region": "Shanghai Municipality",
+    "country": "China",
+    "climate": "temperate",
+    "dest_type": "city",
+    "est_cost": 426.0,
+    "travel_time_hours": 15.3,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Shanghai (上海; Zånhae in Shanghainese, Shànghǎi in Mandarin) is the most developed city in China, the country's main center for finance and fashion, and one of the world's most populous and important cities. Shanghai is a fascinating mix of East and West.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg/1280px-Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg"
+  },
+  {
+    "id": 40,
+    "name": "Taipei",
+    "region": "Taiwan",
+    "country": "Taiwan",
+    "climate": "warm",
+    "dest_type": "city",
+    "est_cost": 576.0,
+    "travel_time_hours": 16.1,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "thumb|300px|Ximending, Taipei Taipei (; Tâi-pak in Taiwanese, Táiběi in Mandarin) is the capital of Taiwan and a major global city. Located in the north of the island, nestled in a basin between the Yangming and Central Mountains, Taipei serves as the financial, cultural, and political heart of Taiw",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Taipei_Skyline_2022.06.29.jpg/1280px-Taipei_Skyline_2022.06.29.jpg"
+  },
+  {
+    "id": 41,
+    "name": "New York",
+    "region": "New York",
+    "country": "United States",
+    "climate": "continental",
+    "dest_type": "city",
+    "est_cost": 1089.0,
+    "travel_time_hours": 1.7,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Wall Street. Madison Avenue.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/1280px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg"
+  },
+  {
+    "id": 42,
+    "name": "San Francisco",
+    "region": "California",
+    "country": "United States",
+    "climate": "mild",
+    "dest_type": "city",
+    "est_cost": 753.0,
+    "travel_time_hours": 5.6,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "The cultural center of northern California, San Francisco is one of the most visited cities in the world, and with good reason. Its scenic beauty and unique culture help make it one of the most vibrant and desirable cities in the nation, if not the world.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Zeppelin-ride-020100925-195_%285029394846%29.jpg/1280px-Zeppelin-ride-020100925-195_%285029394846%29.jpg"
+  },
+  {
+    "id": 43,
+    "name": "Mexico City",
+    "region": "Mexico City",
+    "country": "Mexico",
+    "climate": "mild",
+    "dest_type": "city",
+    "est_cost": 627.0,
+    "travel_time_hours": 5.1,
+    "activities": [
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Mexico City (Spanish: México, Ciudad de México or CDMX) is the capital of the Mexican Republic, the most populous city in the country, and one of the most important financial and cultural centers of the American continent. The city center is built on the ruins of the Aztec capital Tenochtitlan, and ",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg/1280px-Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg"
+  },
+  {
+    "id": 44,
+    "name": "Cancun",
+    "region": "Quintana Roo",
+    "country": "Mexico",
+    "climate": "tropical",
+    "dest_type": "coastal city",
+    "est_cost": 453.0,
+    "travel_time_hours": 4.2,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Cancún is a popular Caribbean tourist destination on the northeast tip of Mexico's Yucatán Peninsula, in Quintana Roo, which also is called the Mexican Caribbean. In addition to 22 km (14 miles) of beaches, you'll find a wide variety of resorts, spas, golf courses, night clubs, and shopping malls.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cancun_Strand_Luftbild_%2822143397586%29.jpg/1280px-Cancun_Strand_Luftbild_%2822143397586%29.jpg"
+  },
+  {
+    "id": 45,
+    "name": "Rio de Janeiro",
+    "region": "Rio de Janeiro",
+    "country": "Brazil",
+    "climate": "tropical",
+    "dest_type": "coastal city",
+    "est_cost": 372.0,
+    "travel_time_hours": 11.3,
+    "activities": [
+      "beach",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Rio de Janeiro is the second largest city in Brazil, on the South Atlantic coast. Rio is famous for its breathtaking landscape, its laid-back beach culture and its annual carnival.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Cidade_Maravilhosa.jpg/1280px-Cidade_Maravilhosa.jpg"
+  },
+  {
+    "id": 46,
+    "name": "Lima",
+    "region": "Lima Province",
+    "country": "Peru",
+    "climate": "arid",
+    "dest_type": "city",
+    "est_cost": 288.0,
+    "travel_time_hours": 8.7,
+    "activities": [
+      "adventure",
+      "beach",
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Lima is the capital of Peru and its largest city. Founded in 1535 by the Spanish conquistador Francisco Pizarro, the modern city is a curious mix of the modern mega city with some 'islands of modernity', large but orderly slum areas and colonial architecture in downtown.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Bas%C3%ADlica_Catedral_Metropolitana_de_Lima_%28cropped%29.jpg/1280px-Bas%C3%ADlica_Catedral_Metropolitana_de_Lima_%28cropped%29.jpg"
+  },
+  {
+    "id": 47,
+    "name": "Cusco",
+    "region": "Cuzco Department",
+    "country": "Peru",
+    "climate": "mild",
+    "dest_type": "nature",
+    "est_cost": 195.0,
+    "travel_time_hours": 9.0,
+    "activities": [
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Cuzco or Cusco (Qosqo in Quechua, Cusco in Spanish), in the Southern Sierras, is a fascinating city that was the capital of the Inca Empire. Cuzco is a and is one of Peru's most visited cities as it is the largest and most comfortable city from which tourists can begin visits to Machu Picchu, the Sa",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Vista_Calle_Suecia.jpg/1280px-Vista_Calle_Suecia.jpg"
+  },
+  {
+    "id": 48,
+    "name": "Sydney",
+    "region": "New South Wales",
+    "country": "Australia",
+    "climate": "mild",
+    "dest_type": "coastal city",
+    "est_cost": 666.0,
+    "travel_time_hours": 20.5,
+    "activities": [
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Sydney is the Harbour City, and is the oldest and most cosmopolitan city in Australia with an enviable reputation as one of the world's most beautiful and livable cities. Brimming with history, nature, culture, art, fashion, cuisine and design, it is set next to miles of ocean coastline and sandy su",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg/1280px-Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg"
+  },
+  {
+    "id": 49,
+    "name": "Auckland",
+    "region": "Auckland",
+    "country": "New Zealand",
+    "climate": "mild",
+    "dest_type": "coastal city",
+    "est_cost": 492.0,
+    "travel_time_hours": 18.4,
+    "activities": [
+      "adventure",
+      "culture",
+      "food",
+      "history",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "Auckland (Maori: Tāmaki Makaurau) is the largest city in New Zealand at 1.7 million citizens, and the main arrival point for visitors to the country. It is a vibrant multicultural city, set around two big natural harbours, and ranked as one of the most liveable cities in the world.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Auckland_skyline_-_May_2024_%282%29.jpg/1280px-Auckland_skyline_-_May_2024_%282%29.jpg"
+  },
+  {
+    "id": 50,
+    "name": "Queenstown",
+    "region": "Otago",
+    "country": "New Zealand",
+    "climate": "mild",
+    "dest_type": "mountain",
+    "est_cost": 375.0,
+    "travel_time_hours": 19.5,
+    "activities": [
+      "culture",
+      "food",
+      "nature",
+      "nightlife",
+      "shopping"
+    ],
+    "description": "thumb|300px|The Remarkables and Lake Wakatipu from Queenstown Queenstown (Māori: Tāhuna) is a world renowned resort town in the South Island of New Zealand. The town sits on the edge of Lake Wakatipu and is surrounded by the Southern Alps.",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Queenstown_1_%288168013172%29.jpg/1280px-Queenstown_1_%288168013172%29.jpg"
+  }
+]
