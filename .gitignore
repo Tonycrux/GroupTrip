@@ -16,6 +16,9 @@ node_modules/
 dist/
 *.local
 
+# Agent tooling (local preferences, not project source)
+.commandcode/
+
 # Editors / OS
 .DS_Store
 .idea/
