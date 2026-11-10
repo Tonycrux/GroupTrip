@@ -5,6 +5,10 @@ import { useDialog } from "./DialogProvider";
 import type { Condition, RatingValue, Recommendation } from "../types";
 import { Avatar, AvatarStack, Chip, Ring, bandColor } from "./ui";
 
+import { api } from "../api/client";
+import type { ParsedCondition } from "../api/client";
+import LlmExplanation from "./LlmExplanation";
+
 const RATINGS: { value: RatingValue; label: string }[] = [
   { value: "interested", label: "Interested" },
   { value: "interested_if", label: "If…" },
@@ -34,11 +38,22 @@ export default function DestinationDrawer({
     previewCondition,
     logRevision,
     chooseDestination,
+    refresh,
   } = useApp();
   const { promptText } = useDialog();
 
   const [preview, setPreview] = useState<{ condition: Condition; summary: string } | null>(null);
+
+  const [proposal, setProposal] = useState<{ source: string; conditions: ParsedCondition[] } | null>(null);
+  const [parsing, setParsing] = useState(false);
+  const [proposalError, setProposalError] = useState<string | null>(null);
+
   const closeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setProposal(null);
+    setProposalError(null);
+  }, [recommendation?.destination.id]);
 
   useEffect(() => {
     if (!recommendation) return;
@@ -80,7 +95,26 @@ export default function DestinationDrawer({
         confirmLabel: "Save condition",
         allowEmpty: true,
       });
-      void rateDestination(dest.id, value, reason || undefined);
+
+      let parsed: ParsedCondition[] = [];
+      if (conflict && reason && reason.trim()) {
+        setParsing(true);
+        setProposalError(null);
+        try {
+          parsed = (await api.llmParseCondition(reason.trim())).conditions;
+        } catch {
+          parsed = [];
+        } finally {
+          setParsing(false);
+        }
+      }
+
+      if (parsed.length > 0) {
+        void rateDestination(dest.id, value); // record the choice; the member confirms the limits below
+        setProposal({ source: reason!.trim(), conditions: parsed });
+      } else {
+        void rateDestination(dest.id, value, reason || undefined); // original behaviour
+      }
       return;
     }
     void rateDestination(dest.id, value);
@@ -95,6 +129,33 @@ export default function DestinationDrawer({
       affected_condition_ids: [condition.id],
     });
     setPreview(null);
+  };
+
+    const toggleStatus = (i: number) =>
+    setProposal((p) =>
+      p
+        ? {
+            ...p,
+            conditions: p.conditions.map((c, j) =>
+              j === i ? { ...c, status: c.status === "fixed" ? "flexible" : "fixed" } : c,
+            ),
+          }
+        : p,
+    );
+
+  const acceptProposal = async () => {
+    if (!proposal || actorId == null) return;
+    setParsing(true);
+    setProposalError(null);
+    try {
+      await api.llmAcceptConditions(bundle.trip.id, actorId, proposal.conditions);
+      setProposal(null);
+      await refresh();
+    } catch (e) {
+      setProposalError(e instanceof Error ? e.message : "Could not save those limits");
+    } finally {
+      setParsing(false);
+    }
   };
 
   return (
@@ -165,7 +226,12 @@ export default function DestinationDrawer({
               )}
 
               <h3 className="sec">Why it sits here</h3>
-              <p className="note">{recommendation.explanation}</p>
+              <LlmExplanation
+                tripId={bundle.trip.id}
+                destinationId={dest.id}
+                fallback={recommendation.explanation}
+                refreshKey={recommendation.member_scores.map((s) => s.score).join(",")}
+              />
             </>
           )}
 
@@ -202,6 +268,37 @@ export default function DestinationDrawer({
                   )}
                 </span>
               ))}
+            </div>
+          )}
+
+          {(parsing || proposal || proposalError) && (
+            <div className="note note-warn">
+              {parsing && !proposal && <div>Reading your condition…</div>}
+              {proposal && (
+                <>
+                  <div>
+                    Is this what you meant? <span className="hint">“{proposal.source}”</span>
+                  </div>
+                  {proposal.conditions.map((c, i) => (
+                    <div key={i} className="chipset" style={{ marginTop: 8 }}>
+                      <span className={`chip ${c.status === "fixed" ? "bad" : "ghost"}`}>{c.status}</span>
+                      <span>{c.text}</span>
+                      <button type="button" className="btn sm" onClick={() => toggleStatus(i)}>
+                        {c.status === "fixed" ? "Make flexible" : "Make fixed"}
+                      </button>
+                    </div>
+                  ))}
+                  <div className="chipset" style={{ marginTop: 8 }}>
+                    <button type="button" className="btn sm go" disabled={parsing} onClick={acceptProposal}>
+                      Confirm
+                    </button>
+                    <button type="button" className="btn sm" onClick={() => setProposal(null)}>
+                      Discard
+                    </button>
+                  </div>
+                </>
+              )}
+              {proposalError && <div>{proposalError}</div>}
             </div>
           )}
 

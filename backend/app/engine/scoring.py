@@ -99,6 +99,8 @@ def _taste_component(profile: MemberProfile, dest: Destination) -> tuple[Optiona
     offered = {a.lower() for a in dest.activities} | {dest.dest_type.lower(), dest.climate.lower()}
     likes_hit = len({l.lower() for l in profile.likes} & offered)
     dislikes_hit = len({d.lower() for d in profile.dislikes} & offered)
+    liked = {l.lower() for l in profile.likes} & offered
+    disliked = sorted({d.lower() for d in profile.dislikes} & offered)
     score = 0.5 + 0.25 * likes_hit - 0.5 * dislikes_hit
     note = None
     if dislikes_hit:

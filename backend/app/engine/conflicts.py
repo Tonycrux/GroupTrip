@@ -2,7 +2,15 @@ from dataclasses import dataclass
 
 from app.engine.scoring import MemberProfile, ScoredMember
 from app.models import Destination
+from dataclasses import dataclass, field
 
+
+# @dataclass
+# class Conflict:
+#     kind: str
+#     member_ids: list[int]
+#     summary: str
+#     severity: float
 
 @dataclass
 class Conflict:
@@ -10,6 +18,9 @@ class Conflict:
     member_ids: list[int]
     summary: str
     severity: float
+    subject: str | None = None
+    wanted_by: list[int] = field(default_factory=list)
+    avoided_by: list[int] = field(default_factory=list)
 
 
 def _names(ids: list[int], names: dict[int, str]) -> str:
@@ -41,34 +52,24 @@ def detect_conflicts(
             )
         )
 
-    for key, label in (("climate", "climate"), ("activity", "activity")):
-        likers, avoiders = [], []
-        for m, p in prefs.items():
-            target = dest.climate.lower() if key == "climate" else None
-            if key == "climate":
-                if target and target in {c.lower() for c in p.climates}:
-                    likers.append(m)
-                if target and target in {d.lower() for d in p.dislikes}:
-                    avoiders.append(m)
-            else:
-                hit_like = {a.lower() for a in p.likes} & {a.lower() for a in dest.activities}
-                hit_dislike = {a.lower() for a in p.dislikes} & {a.lower() for a in dest.activities}
-                if hit_like:
-                    likers.append(m)
-                if hit_dislike:
-                    avoiders.append(m)
+    # one conflict per activity, so nobody is on both sides
+    for act in sorted({a.lower() for a in dest.activities}):
+        likers = [m for m, p in prefs.items() if act in {x.lower() for x in p.likes}]
+        avoiders = [m for m, p in prefs.items() if act in {x.lower() for x in p.dislikes}]
         if likers and avoiders:
-            conflicts.append(
-                Conflict(
-                    kind=key,
-                    member_ids=likers + avoiders,
-                    summary=(
-                        f"{_names(likers, names)} want this {label} while "
-                        f"{_names(avoiders, names)} avoid it"
-                    ),
-                    severity=0.8,
-                )
-            )
+            conflicts.append(Conflict(
+                kind="activity", member_ids=likers + avoiders, severity=0.8,
+                summary=f"{_names(likers, names)} want {act} while {_names(avoiders, names)} avoid it",
+                subject=act, wanted_by=likers, avoided_by=avoiders))
+
+    climate = dest.climate.lower()
+    likers = [m for m, p in prefs.items() if climate in {c.lower() for c in p.climates}]
+    avoiders = [m for m, p in prefs.items() if climate in {d.lower() for d in p.dislikes}]
+    if likers and avoiders:
+        conflicts.append(Conflict(
+            kind="climate", member_ids=likers + avoiders, severity=0.8,
+            summary=f"{_names(likers, names)} want {climate} weather while {_names(avoiders, names)} avoid it",
+            subject=climate, wanted_by=likers, avoided_by=avoiders))
 
     for sm in scored or []:
         if sm.hard_violations:

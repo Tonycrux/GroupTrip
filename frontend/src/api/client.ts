@@ -22,6 +22,21 @@ import type {
   Veto,
 } from "../types";
 
+export type LlmExplanation = {
+  source: "llm" | "template";
+  errors: string[];
+  headline: string;
+  per_member: { member: string; line: string }[];
+};
+
+export type ParsedCondition = {
+  type: string;
+  operator: string | null;
+  value: number | string | null;
+  status: "fixed" | "flexible";
+  text: string;
+};
+
 const BASE = "/api";
 
 let actorId: number | null = null;
@@ -118,6 +133,16 @@ export const api = {
     request<Recommendation[]>(
       `/trips/${tripId}/recommendations${strategy ? `?strategy=${strategy}` : ""}`,
     ),
+
+  /* llm */
+  llmExplanation: (tripId: number, destinationId: number, strategy?: string) =>
+    request<LlmExplanation>(
+      `/llm/trips/${tripId}/recommendations/${destinationId}/explanation${strategy ? `?strategy=${strategy}` : ""}`,
+    ),
+  llmParseCondition: (text: string) =>
+    request<{ conditions: ParsedCondition[] }>("/llm/conditions/parse", post({ text })),
+  llmAcceptConditions: (tripId: number, memberId: number, conditions: ParsedCondition[]) =>
+    request<unknown>(`/llm/trips/${tripId}/members/${memberId}/conditions/accept`, post(conditions)),
 
   /* vetoes */
   createVeto: (tripId: number, body: { member_id: number; destination_id: number; reason?: string }) =>

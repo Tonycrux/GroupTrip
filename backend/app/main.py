@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.routers import llm
 
 from app.config import settings
 from app.db import init_db
@@ -22,6 +23,7 @@ from app.routers import (
     study,
     trips,
     vetoes,
+    llm,
 )
 from app.seed import seed_if_empty
 
@@ -66,5 +68,6 @@ for module in (
     requests,
     study,
     bootstrap,
+    llm,
 ):
     app.include_router(module.router)
