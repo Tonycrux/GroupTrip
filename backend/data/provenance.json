@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "name": "Lisbon",
+    "cost_source": "https://www.budgetyourtrip.com/portugal/lisbon",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 188.0,
+    "budget_daily_usd": 82.0,
+    "midrange_daily_usd": 188.0,
+    "luxury_daily_usd": 436.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 16.9,
+      "coldest_month_c": 11.4,
+      "warmest_month_c": 22.4,
+      "annual_precip_mm": 561
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Lisbon",
+    "activity_count": 12,
+    "activities_with_coords": 5,
+    "coords": {
+      "lat": 38.7251,
+      "lon": -9.1498
+    },
+    "distance_km_from_origin": 5725,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 2,
+    "name": "Barcelona",
+    "cost_source": "https://www.budgetyourtrip.com/spain/barcelona",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 201.0,
+    "budget_daily_usd": 79.0,
+    "midrange_daily_usd": 204.0,
+    "luxury_daily_usd": 535.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 16.3,
+      "coldest_month_c": 8.4,
+      "warmest_month_c": 24.9,
+      "annual_precip_mm": 615
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Barcelona",
+    "activity_count": 12,
+    "activities_with_coords": 7,
+    "coords": {
+      "lat": 41.3888,
+      "lon": 2.159
+    },
+    "distance_km_from_origin": 6402,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 3,
+    "name": "Rome",
+    "cost_source": "https://www.budgetyourtrip.com/italy/rome",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 232.0,
+    "budget_daily_usd": 89.0,
+    "midrange_daily_usd": 232.0,
+    "luxury_daily_usd": 630.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 16.4,
+      "coldest_month_c": 7.6,
+      "warmest_month_c": 26.3,
+      "annual_precip_mm": 891
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Rome",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 41.8919,
+      "lon": 12.5113
+    },
+    "distance_km_from_origin": 7083,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 4,
+    "name": "Paris",
+    "cost_source": "https://www.budgetyourtrip.com/france/paris",
+    "cost_updated": "November 2, 2026",
+    "daily_cost_usd": 298.0,
+    "budget_daily_usd": 111.0,
+    "midrange_daily_usd": 298.0,
+    "luxury_daily_usd": 844.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 12.3,
+      "coldest_month_c": 4.8,
+      "warmest_month_c": 20.5,
+      "annual_precip_mm": 739
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Paris",
+    "activity_count": 12,
+    "activities_with_coords": 12,
+    "coords": {
+      "lat": 48.8534,
+      "lon": 2.3488
+    },
+    "distance_km_from_origin": 6001,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 5,
+    "name": "Amsterdam",
+    "cost_source": "https://www.budgetyourtrip.com/netherlands/amsterdam",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 237.0,
+    "budget_daily_usd": 94.0,
+    "midrange_daily_usd": 237.0,
+    "luxury_daily_usd": 605.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 11.0,
+      "coldest_month_c": 4.6,
+      "warmest_month_c": 18.1,
+      "annual_precip_mm": 879
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Amsterdam",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": 52.374,
+      "lon": 4.8897
+    },
+    "distance_km_from_origin": 5981,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 6,
+    "name": "Prague",
+    "cost_source": "https://www.budgetyourtrip.com/czech-republic/prague",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 140.0,
+    "budget_daily_usd": 58.0,
+    "midrange_daily_usd": 140.0,
+    "luxury_daily_usd": 340.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 10.8,
+      "coldest_month_c": 1.1,
+      "warmest_month_c": 21.0,
+      "annual_precip_mm": 627
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Prague",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 50.088,
+      "lon": 14.4208
+    },
+    "distance_km_from_origin": 6681,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 7,
+    "name": "Budapest",
+    "cost_source": "https://www.budgetyourtrip.com/hungary/budapest",
+    "cost_updated": "November 2, 2026",
+    "daily_cost_usd": 124.0,
+    "budget_daily_usd": 46.0,
+    "midrange_daily_usd": 124.0,
+    "luxury_daily_usd": 352.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 12.0,
+      "coldest_month_c": 0.8,
+      "warmest_month_c": 23.1,
+      "annual_precip_mm": 697
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Budapest",
+    "activity_count": 12,
+    "activities_with_coords": 8,
+    "coords": {
+      "lat": 47.4984,
+      "lon": 19.0404
+    },
+    "distance_km_from_origin": 7124,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 8,
+    "name": "Athens",
+    "cost_source": "https://www.budgetyourtrip.com/greece/athens",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 173.0,
+    "budget_daily_usd": 70.0,
+    "midrange_daily_usd": 173.0,
+    "luxury_daily_usd": 413.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 17.9,
+      "coldest_month_c": 8.8,
+      "warmest_month_c": 28.2,
+      "annual_precip_mm": 486
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Athens",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 37.9838,
+      "lon": 23.7278
+    },
+    "distance_km_from_origin": 8097,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 9,
+    "name": "Santorini",
+    "cost_source": "https://www.budgetyourtrip.com/greece/santorini",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 281.0,
+    "budget_daily_usd": 115.0,
+    "midrange_daily_usd": 281.0,
+    "luxury_daily_usd": 659.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 19.2,
+      "coldest_month_c": 12.8,
+      "warmest_month_c": 26.4,
+      "annual_precip_mm": 282
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Santorini%7CFira%7COia",
+    "activity_count": 12,
+    "activities_with_coords": 12,
+    "coords": {
+      "lat": 36.4057,
+      "lon": 25.4568
+    },
+    "distance_km_from_origin": 8328,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 10,
+    "name": "Reykjavik",
+    "cost_source": "https://www.budgetyourtrip.com/iceland/reykjavik",
+    "cost_updated": "October 31, 2026",
+    "daily_cost_usd": 307.0,
+    "budget_daily_usd": 120.0,
+    "midrange_daily_usd": 307.0,
+    "luxury_daily_usd": 909.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 4.7,
+      "coldest_month_c": -0.6,
+      "warmest_month_c": 11.2,
+      "annual_precip_mm": 1507
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Reykjav%C3%ADk",
+    "activity_count": 12,
+    "activities_with_coords": 11,
+    "coords": {
+      "lat": 64.1355,
+      "lon": -21.8954
+    },
+    "distance_km_from_origin": 4197,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 11,
+    "name": "Oslo",
+    "cost_source": "https://www.budgetyourtrip.com/norway/oslo",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 160.0,
+    "budget_daily_usd": 70.0,
+    "midrange_daily_usd": 155.0,
+    "luxury_daily_usd": 329.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 7.1,
+      "coldest_month_c": -2.6,
+      "warmest_month_c": 17.7,
+      "annual_precip_mm": 953
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Oslo",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": 59.9127,
+      "lon": 10.7461
+    },
+    "distance_km_from_origin": 5936,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 12,
+    "name": "Dubrovnik",
+    "cost_source": "https://www.budgetyourtrip.com/croatia/dubrovnik",
+    "cost_updated": "October 31, 2026",
+    "daily_cost_usd": 177.0,
+    "budget_daily_usd": 71.0,
+    "midrange_daily_usd": 177.0,
+    "luxury_daily_usd": 436.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 16.3,
+      "coldest_month_c": 7.6,
+      "warmest_month_c": 25.8,
+      "annual_precip_mm": 1675
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Dubrovnik",
+    "activity_count": 12,
+    "activities_with_coords": 4,
+    "coords": {
+      "lat": 42.6412,
+      "lon": 18.1091
+    },
+    "distance_km_from_origin": 7398,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 13,
+    "name": "Split",
+    "cost_source": "https://www.budgetyourtrip.com/croatia/split",
+    "cost_updated": "October 31, 2026",
+    "daily_cost_usd": 220.0,
+    "budget_daily_usd": 85.0,
+    "midrange_daily_usd": 220.0,
+    "luxury_daily_usd": 586.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 16.3,
+      "coldest_month_c": 7.2,
+      "warmest_month_c": 26.4,
+      "annual_precip_mm": 1334
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Split",
+    "activity_count": 12,
+    "activities_with_coords": 9,
+    "coords": {
+      "lat": 43.5089,
+      "lon": 16.4392
+    },
+    "distance_km_from_origin": 7232,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 14,
+    "name": "Venice",
+    "cost_source": "https://www.budgetyourtrip.com/italy/venice",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 310.0,
+    "budget_daily_usd": 123.0,
+    "midrange_daily_usd": 315.0,
+    "luxury_daily_usd": 820.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 14.3,
+      "coldest_month_c": 4.2,
+      "warmest_month_c": 24.6,
+      "annual_precip_mm": 980
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Venice",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 45.4371,
+      "lon": 12.3326
+    },
+    "distance_km_from_origin": 6842,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 15,
+    "name": "Berlin",
+    "cost_source": "https://www.budgetyourtrip.com/germany/berlin",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 197.0,
+    "budget_daily_usd": 74.0,
+    "midrange_daily_usd": 197.0,
+    "luxury_daily_usd": 544.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 10.8,
+      "coldest_month_c": 1.8,
+      "warmest_month_c": 20.2,
+      "annual_precip_mm": 600
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Berlin",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": 52.5244,
+      "lon": 13.4105
+    },
+    "distance_km_from_origin": 6476,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 16,
+    "name": "Vienna",
+    "cost_source": "https://www.budgetyourtrip.com/austria/vienna",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 199.0,
+    "budget_daily_usd": 76.0,
+    "midrange_daily_usd": 199.0,
+    "luxury_daily_usd": 535.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 11.6,
+      "coldest_month_c": 1.3,
+      "warmest_month_c": 22.3,
+      "annual_precip_mm": 664
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Vienna",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 48.2085,
+      "lon": 16.3721
+    },
+    "distance_km_from_origin": 6917,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 17,
+    "name": "Copenhagen",
+    "cost_source": "https://www.budgetyourtrip.com/denmark/copenhagen",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 265.0,
+    "budget_daily_usd": 108.0,
+    "midrange_daily_usd": 265.0,
+    "luxury_daily_usd": 680.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 9.8,
+      "coldest_month_c": 2.4,
+      "warmest_month_c": 17.8,
+      "annual_precip_mm": 678
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Copenhagen",
+    "activity_count": 12,
+    "activities_with_coords": 8,
+    "coords": {
+      "lat": 55.6759,
+      "lon": 12.5655
+    },
+    "distance_km_from_origin": 6250,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 18,
+    "name": "Edinburgh",
+    "cost_source": "https://www.budgetyourtrip.com/united-kingdom/edinburgh",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 229.0,
+    "budget_daily_usd": 97.0,
+    "midrange_daily_usd": 226.0,
+    "luxury_daily_usd": 574.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 9.3,
+      "coldest_month_c": 4.4,
+      "warmest_month_c": 15.2,
+      "annual_precip_mm": 921
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Edinburgh",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 55.9521,
+      "lon": -3.1965
+    },
+    "distance_km_from_origin": 5341,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 19,
+    "name": "Porto",
+    "cost_source": "https://www.budgetyourtrip.com/portugal/porto",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 180.0,
+    "budget_daily_usd": 76.0,
+    "midrange_daily_usd": 179.0,
+    "luxury_daily_usd": 435.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 15.2,
+      "coldest_month_c": 9.8,
+      "warmest_month_c": 20.4,
+      "annual_precip_mm": 1336
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Porto",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": 41.1485,
+      "lon": -8.611
+    },
+    "distance_km_from_origin": 5635,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 20,
+    "name": "Krakow",
+    "cost_source": "https://www.budgetyourtrip.com/poland/krakow",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 76.0,
+    "budget_daily_usd": 30.0,
+    "midrange_daily_usd": 76.0,
+    "luxury_daily_usd": 190.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 10.0,
+      "coldest_month_c": -0.3,
+      "warmest_month_c": 20.1,
+      "annual_precip_mm": 873
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Krak%C3%B3w",
+    "activity_count": 12,
+    "activities_with_coords": 8,
+    "coords": {
+      "lat": 50.0614,
+      "lon": 19.9366
+    },
+    "distance_km_from_origin": 7005,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 21,
+    "name": "Istanbul",
+    "cost_source": "https://www.budgetyourtrip.com/turkey/istanbul",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 149.0,
+    "budget_daily_usd": 61.0,
+    "midrange_daily_usd": 151.0,
+    "luxury_daily_usd": 352.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 15.4,
+      "coldest_month_c": 6.7,
+      "warmest_month_c": 25.3,
+      "annual_precip_mm": 725
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Istanbul",
+    "activity_count": 12,
+    "activities_with_coords": 11,
+    "coords": {
+      "lat": 41.0138,
+      "lon": 28.9497
+    },
+    "distance_km_from_origin": 8191,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 22,
+    "name": "Marrakesh",
+    "cost_source": "https://www.budgetyourtrip.com/morocco/marrakesh",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 95.0,
+    "budget_daily_usd": 36.0,
+    "midrange_daily_usd": 95.0,
+    "luxury_daily_usd": 261.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 20.1,
+      "coldest_month_c": 11.4,
+      "warmest_month_c": 29.4,
+      "annual_precip_mm": 223
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Marrakesh",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": 31.6342,
+      "lon": -7.9999
+    },
+    "distance_km_from_origin": 6231,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 23,
+    "name": "Cairo",
+    "cost_source": "https://www.budgetyourtrip.com/egypt/cairo",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 29.0,
+    "budget_daily_usd": 12.0,
+    "midrange_daily_usd": 29.0,
+    "luxury_daily_usd": 55.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 23.0,
+      "coldest_month_c": 13.8,
+      "warmest_month_c": 30.5,
+      "annual_precip_mm": 35
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Cairo",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 30.0626,
+      "lon": 31.2497
+    },
+    "distance_km_from_origin": 9208,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 24,
+    "name": "Cape Town",
+    "cost_source": "https://www.budgetyourtrip.com/south-africa/cape-town",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 188.0,
+    "budget_daily_usd": 98.0,
+    "midrange_daily_usd": 187.0,
+    "luxury_daily_usd": 475.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 17.0,
+      "coldest_month_c": 12.9,
+      "warmest_month_c": 21.2,
+      "annual_precip_mm": 578
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Cape%20Town",
+    "activity_count": 12,
+    "activities_with_coords": 12,
+    "coords": {
+      "lat": -33.9258,
+      "lon": 18.4232
+    },
+    "distance_km_from_origin": 13102,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 25,
+    "name": "Dubai",
+    "cost_source": "https://www.budgetyourtrip.com/united-arab-emirates/dubai",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 289.0,
+    "budget_daily_usd": 115.0,
+    "midrange_daily_usd": 289.0,
+    "luxury_daily_usd": 751.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 28.1,
+      "coldest_month_c": 18.9,
+      "warmest_month_c": 35.9,
+      "annual_precip_mm": 67
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Dubai",
+    "activity_count": 12,
+    "activities_with_coords": 11,
+    "coords": {
+      "lat": 25.0772,
+      "lon": 55.3093
+    },
+    "distance_km_from_origin": 11085,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 26,
+    "name": "Nairobi",
+    "cost_source": "https://www.budgetyourtrip.com/kenya/nairobi",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 67.0,
+    "budget_daily_usd": 52.0,
+    "midrange_daily_usd": 67.0,
+    "luxury_daily_usd": 104.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 18.9,
+      "coldest_month_c": 17.2,
+      "warmest_month_c": 20.6,
+      "annual_precip_mm": 878
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Nairobi",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": -1.2833,
+      "lon": 36.8167
+    },
+    "distance_km_from_origin": 12183,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 27,
+    "name": "Tokyo",
+    "cost_source": "https://www.budgetyourtrip.com/japan/tokyo",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 179.0,
+    "budget_daily_usd": 67.0,
+    "midrange_daily_usd": 178.0,
+    "luxury_daily_usd": 508.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 15.4,
+      "coldest_month_c": 3.9,
+      "warmest_month_c": 27.0,
+      "annual_precip_mm": 1586
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Tokyo",
+    "activity_count": 12,
+    "activities_with_coords": 7,
+    "coords": {
+      "lat": 35.6895,
+      "lon": 139.6917
+    },
+    "distance_km_from_origin": 10348,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 28,
+    "name": "Kyoto",
+    "cost_source": "https://www.budgetyourtrip.com/japan/kyoto",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 111.0,
+    "budget_daily_usd": 45.0,
+    "midrange_daily_usd": 110.0,
+    "luxury_daily_usd": 263.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 14.9,
+      "coldest_month_c": 3.3,
+      "warmest_month_c": 27.1,
+      "annual_precip_mm": 1789
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Kyoto",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 35.0211,
+      "lon": 135.7538
+    },
+    "distance_km_from_origin": 10572,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 29,
+    "name": "Bangkok",
+    "cost_source": "https://www.budgetyourtrip.com/thailand/bangkok",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 99.0,
+    "budget_daily_usd": 37.0,
+    "midrange_daily_usd": 99.0,
+    "luxury_daily_usd": 281.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 28.0,
+      "coldest_month_c": 26.1,
+      "warmest_month_c": 29.9,
+      "annual_precip_mm": 1428
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Bangkok",
+    "activity_count": 12,
+    "activities_with_coords": 8,
+    "coords": {
+      "lat": 13.754,
+      "lon": 100.5014
+    },
+    "distance_km_from_origin": 13632,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 30,
+    "name": "Chiang Mai",
+    "cost_source": "https://www.budgetyourtrip.com/thailand/chiang-mai",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 57.0,
+    "budget_daily_usd": 21.0,
+    "midrange_daily_usd": 57.0,
+    "luxury_daily_usd": 168.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 25.7,
+      "coldest_month_c": 21.6,
+      "warmest_month_c": 29.0,
+      "annual_precip_mm": 1664
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Chiang%20Mai",
+    "activity_count": 12,
+    "activities_with_coords": 9,
+    "coords": {
+      "lat": 18.7904,
+      "lon": 98.9847
+    },
+    "distance_km_from_origin": 13070,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 31,
+    "name": "Bali",
+    "cost_source": "https://www.budgetyourtrip.com/indonesia/bali",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 78.0,
+    "budget_daily_usd": 29.0,
+    "midrange_daily_usd": 79.0,
+    "luxury_daily_usd": 237.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 22.9,
+      "coldest_month_c": 21.9,
+      "warmest_month_c": 23.5,
+      "annual_precip_mm": 2944
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Ubud%7CBali%7CSouth%20Bali%7CCentral%20Bali",
+    "activity_count": 12,
+    "activities_with_coords": 11,
+    "coords": {
+      "lat": -8.3333,
+      "lon": 115.0
+    },
+    "distance_km_from_origin": 15847,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 32,
+    "name": "Singapore",
+    "cost_source": "https://www.budgetyourtrip.com/singapore",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 181.0,
+    "budget_daily_usd": 69.0,
+    "midrange_daily_usd": 181.0,
+    "luxury_daily_usd": 492.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 27.1,
+      "coldest_month_c": 26.2,
+      "warmest_month_c": 27.8,
+      "annual_precip_mm": 2501
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Singapore",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": 1.2897,
+      "lon": 103.8501
+    },
+    "distance_km_from_origin": 15007,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 33,
+    "name": "Seoul",
+    "cost_source": "https://www.budgetyourtrip.com/south-korea/seoul",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 135.0,
+    "budget_daily_usd": 52.0,
+    "midrange_daily_usd": 135.0,
+    "luxury_daily_usd": 358.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 11.8,
+      "coldest_month_c": -2.8,
+      "warmest_month_c": 25.2,
+      "annual_precip_mm": 1170
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Seoul",
+    "activity_count": 12,
+    "activities_with_coords": 9,
+    "coords": {
+      "lat": 37.566,
+      "lon": 126.9784
+    },
+    "distance_km_from_origin": 10601,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 34,
+    "name": "Hong Kong",
+    "cost_source": "https://www.budgetyourtrip.com/hong-kong",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 194.0,
+    "budget_daily_usd": 78.0,
+    "midrange_daily_usd": 194.0,
+    "luxury_daily_usd": 480.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 23.0,
+      "coldest_month_c": 16.1,
+      "warmest_month_c": 28.3,
+      "annual_precip_mm": 2110
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Hong%20Kong",
+    "activity_count": 12,
+    "activities_with_coords": 7,
+    "coords": {
+      "lat": 22.2783,
+      "lon": 114.1747
+    },
+    "distance_km_from_origin": 12554,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 35,
+    "name": "Hanoi",
+    "cost_source": "https://www.budgetyourtrip.com/vietnam/hanoi",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 58.0,
+    "budget_daily_usd": 21.0,
+    "midrange_daily_usd": 58.0,
+    "luxury_daily_usd": 170.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 24.1,
+      "coldest_month_c": 17.1,
+      "warmest_month_c": 29.7,
+      "annual_precip_mm": 1966
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Hanoi",
+    "activity_count": 12,
+    "activities_with_coords": 5,
+    "coords": {
+      "lat": 21.0245,
+      "lon": 105.8412
+    },
+    "distance_km_from_origin": 12803,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 36,
+    "name": "Kuala Lumpur",
+    "cost_source": "https://www.budgetyourtrip.com/malaysia/kuala-lumpur",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 85.0,
+    "budget_daily_usd": 31.0,
+    "midrange_daily_usd": 85.0,
+    "luxury_daily_usd": 261.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 26.7,
+      "coldest_month_c": 26.0,
+      "warmest_month_c": 27.2,
+      "annual_precip_mm": 2851
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Kuala%20Lumpur",
+    "activity_count": 12,
+    "activities_with_coords": 9,
+    "coords": {
+      "lat": 3.1412,
+      "lon": 101.6865
+    },
+    "distance_km_from_origin": 14811,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 37,
+    "name": "Male",
+    "cost_source": "https://www.budgetyourtrip.com/maldives",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 350.0,
+    "budget_daily_usd": 141.0,
+    "midrange_daily_usd": 350.0,
+    "luxury_daily_usd": 846.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 27.6,
+      "coldest_month_c": 27.1,
+      "warmest_month_c": 28.3,
+      "annual_precip_mm": 1857
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Mal%C3%A9",
+    "activity_count": 12,
+    "activities_with_coords": 6,
+    "coords": {
+      "lat": 4.1752,
+      "lon": 73.5092
+    },
+    "distance_km_from_origin": 14044,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 38,
+    "name": "Beijing",
+    "cost_source": "https://www.budgetyourtrip.com/china/beijing",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 98.0,
+    "budget_daily_usd": 39.0,
+    "midrange_daily_usd": 97.0,
+    "luxury_daily_usd": 243.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 13.0,
+      "coldest_month_c": -2.9,
+      "warmest_month_c": 27.1,
+      "annual_precip_mm": 594
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Beijing",
+    "activity_count": 12,
+    "activities_with_coords": 2,
+    "coords": {
+      "lat": 39.9075,
+      "lon": 116.3972
+    },
+    "distance_km_from_origin": 10590,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 39,
+    "name": "Shanghai",
+    "cost_source": "https://www.budgetyourtrip.com/china/shanghai",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 142.0,
+    "budget_daily_usd": 53.0,
+    "midrange_daily_usd": 141.0,
+    "luxury_daily_usd": 400.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 16.9,
+      "coldest_month_c": 5.5,
+      "warmest_month_c": 28.0,
+      "annual_precip_mm": 1451
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Shanghai",
+    "activity_count": 12,
+    "activities_with_coords": 3,
+    "coords": {
+      "lat": 31.2222,
+      "lon": 121.4581
+    },
+    "distance_km_from_origin": 11424,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 40,
+    "name": "Taipei",
+    "cost_source": "https://www.budgetyourtrip.com/taiwan/taipei",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 192.0,
+    "budget_daily_usd": 61.0,
+    "midrange_daily_usd": 192.0,
+    "luxury_daily_usd": 699.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 22.6,
+      "coldest_month_c": 16.0,
+      "warmest_month_c": 28.8,
+      "annual_precip_mm": 1799
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Taipei",
+    "activity_count": 12,
+    "activities_with_coords": 7,
+    "coords": {
+      "lat": 25.0531,
+      "lon": 121.5264
+    },
+    "distance_km_from_origin": 12083,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 41,
+    "name": "New York",
+    "cost_source": "https://www.budgetyourtrip.com/united-states-of-america/nyc",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 363.0,
+    "budget_daily_usd": 131.0,
+    "midrange_daily_usd": 363.0,
+    "luxury_daily_usd": 1101.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 12.2,
+      "coldest_month_c": -0.2,
+      "warmest_month_c": 24.6,
+      "annual_precip_mm": 1269
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Manhattan%7CBrooklyn%7CQueens%7CNew%20York%20City",
+    "activity_count": 12,
+    "activities_with_coords": 12,
+    "coords": {
+      "lat": 40.7143,
+      "lon": -74.006
+    },
+    "distance_km_from_origin": 550,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 43,
+    "name": "Mexico City",
+    "cost_source": "https://www.budgetyourtrip.com/mexico/mexico-city",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 209.0,
+    "budget_daily_usd": 74.0,
+    "midrange_daily_usd": 209.0,
+    "luxury_daily_usd": 685.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 16.6,
+      "coldest_month_c": 13.7,
+      "warmest_month_c": 19.2,
+      "annual_precip_mm": 1118
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Mexico%20City",
+    "activity_count": 12,
+    "activities_with_coords": 4,
+    "coords": {
+      "lat": 19.4285,
+      "lon": -99.1277
+    },
+    "distance_km_from_origin": 3261,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 44,
+    "name": "Cancun",
+    "cost_source": "https://www.budgetyourtrip.com/mexico/cancun",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 151.0,
+    "budget_daily_usd": 57.0,
+    "midrange_daily_usd": 151.0,
+    "luxury_daily_usd": 426.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 26.2,
+      "coldest_month_c": 23.5,
+      "warmest_month_c": 28.3,
+      "annual_precip_mm": 1185
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Canc%C3%BAn",
+    "activity_count": 12,
+    "activities_with_coords": 12,
+    "coords": {
+      "lat": 21.1743,
+      "lon": -86.8466
+    },
+    "distance_km_from_origin": 2593,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 45,
+    "name": "Rio de Janeiro",
+    "cost_source": "https://www.budgetyourtrip.com/brazil/rio-de-janeiro",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 124.0,
+    "budget_daily_usd": 45.0,
+    "midrange_daily_usd": 118.0,
+    "luxury_daily_usd": 316.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 23.7,
+      "coldest_month_c": 20.9,
+      "warmest_month_c": 27.1,
+      "annual_precip_mm": 1194
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Rio%20de%20Janeiro",
+    "activity_count": 12,
+    "activities_with_coords": 5,
+    "coords": {
+      "lat": -22.9064,
+      "lon": -43.1822
+    },
+    "distance_km_from_origin": 8272,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 46,
+    "name": "Lima",
+    "cost_source": "https://www.budgetyourtrip.com/peru/lima",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 96.0,
+    "budget_daily_usd": 33.0,
+    "midrange_daily_usd": 96.0,
+    "luxury_daily_usd": 314.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 19.4,
+      "coldest_month_c": 16.6,
+      "warmest_month_c": 23.0,
+      "annual_precip_mm": 75
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Lima",
+    "activity_count": 12,
+    "activities_with_coords": 2,
+    "coords": {
+      "lat": -12.0432,
+      "lon": -77.0282
+    },
+    "distance_km_from_origin": 6198,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 47,
+    "name": "Cusco",
+    "cost_source": "https://www.budgetyourtrip.com/peru/cusco",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 65.0,
+    "budget_daily_usd": 25.0,
+    "midrange_daily_usd": 64.0,
+    "luxury_daily_usd": 167.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 11.3,
+      "coldest_month_c": 10.3,
+      "warmest_month_c": 12.4,
+      "annual_precip_mm": 1177
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Cusco",
+    "activity_count": 12,
+    "activities_with_coords": 11,
+    "coords": {
+      "lat": -13.5319,
+      "lon": -71.967
+    },
+    "distance_km_from_origin": 6403,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 42,
+    "name": "San Francisco",
+    "cost_source": "https://www.budgetyourtrip.com/united-states-of-america/san-francisco",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 251.0,
+    "budget_daily_usd": 100.0,
+    "midrange_daily_usd": 251.0,
+    "luxury_daily_usd": 631.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 13.8,
+      "coldest_month_c": 10.5,
+      "warmest_month_c": 17.4,
+      "annual_precip_mm": 549
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/San%20Francisco",
+    "activity_count": 12,
+    "activities_with_coords": 11,
+    "coords": {
+      "lat": 37.7749,
+      "lon": -122.4194
+    },
+    "distance_km_from_origin": 3644,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 48,
+    "name": "Sydney",
+    "cost_source": "https://www.budgetyourtrip.com/australia/sydney",
+    "cost_updated": "November 3, 2026",
+    "daily_cost_usd": 222.0,
+    "budget_daily_usd": 81.0,
+    "midrange_daily_usd": 223.0,
+    "luxury_daily_usd": 667.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 17.6,
+      "coldest_month_c": 12.2,
+      "warmest_month_c": 22.7,
+      "annual_precip_mm": 932
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Sydney",
+    "activity_count": 12,
+    "activities_with_coords": 8,
+    "coords": {
+      "lat": -33.8678,
+      "lon": 151.2073
+    },
+    "distance_km_from_origin": 15568,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 49,
+    "name": "Auckland",
+    "cost_source": "https://www.budgetyourtrip.com/new-zealand/auckland",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 164.0,
+    "budget_daily_usd": 59.0,
+    "midrange_daily_usd": 164.0,
+    "luxury_daily_usd": 511.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 15.8,
+      "coldest_month_c": 11.9,
+      "warmest_month_c": 20.3,
+      "annual_precip_mm": 1203
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Auckland",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": -36.8485,
+      "lon": 174.7635
+    },
+    "distance_km_from_origin": 13888,
+    "fetched": "2026-11-05"
+  },
+  {
+    "id": 50,
+    "name": "Queenstown",
+    "cost_source": "https://www.budgetyourtrip.com/new-zealand/queenstown",
+    "cost_updated": "October 30, 2026",
+    "daily_cost_usd": 125.0,
+    "budget_daily_usd": 54.0,
+    "midrange_daily_usd": 125.0,
+    "luxury_daily_usd": 262.0,
+    "climate_source": "Open-Meteo archive 2014-2023",
+    "climate_normals": {
+      "mean_temp_c": 10.0,
+      "coldest_month_c": 3.5,
+      "warmest_month_c": 16.1,
+      "annual_precip_mm": 1403
+    },
+    "activity_source": "https://en.wikivoyage.org/wiki/Queenstown%20%28New%20Zealand%29",
+    "activity_count": 12,
+    "activities_with_coords": 10,
+    "coords": {
+      "lat": -45.0302,
+      "lon": 168.6627
+    },
+    "distance_km_from_origin": 14768,
+    "fetched": "2026-11-05"
+  }
+]
